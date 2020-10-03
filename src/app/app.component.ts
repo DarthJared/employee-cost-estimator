@@ -7,7 +7,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-
+  // private gridApi;
+  // private gridColumnApi;
   columnDefs = [
     {
       field: 'name',
@@ -169,5 +170,23 @@ export class AppComponent {
       percentDependantBenefitsPaidByEmployer: 50
     });
     this.rowData = newRowData;
+  }
+
+  // onGridReady(params): void {
+  //   this.gridApi = params.api;
+  //   this.gridColumnApi = params.columnApi;
+  // }
+  //
+  // onCellValueChanged(params): void {
+  //   console.log('Grid Api:');
+  //   console.log(this.gridApi);
+  //   console.log('Grid Column Api:');
+  //   console.log(this.gridColumnApi);
+  //   console.log('Params:');
+  //   console.log(params);
+  // }
+
+  getAnualCompanyCost(): void {
+    // Use rowData to get the current valued
   }
 }
