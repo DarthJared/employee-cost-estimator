@@ -1,26 +1,173 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  employeeName: string;
-  numDependents: number;
-  income = 2000;
-  percentEmployeeBenefitsPaidByEmployer = 100;
-  percentDependantBenefitsPaidByEmployer = 50;
-  costOfEmployeeToBusiness: string;
-  employeePaycheckAmount: string;
 
-  calculateCost(): void {
-    this.costOfEmployeeToBusiness = (this.income
-      + (1000 * this.percentEmployeeBenefitsPaidByEmployer / 1200)
-      + (500 * this.percentDependantBenefitsPaidByEmployer / 1200)).toFixed(2);
-    this.employeePaycheckAmount = (this.income
-      - (1000 * (100 - this.percentEmployeeBenefitsPaidByEmployer) / 1200)
-      - (500 * (100 - this.percentDependantBenefitsPaidByEmployer) / 1200)).toFixed(2);
+  columnDefs = [
+    {
+      field: 'name',
+      editable: true
+    },
+    {
+      field: 'numDependants',
+      editable: true
+    },
+    {
+      field: 'annualSalary',
+      editable: true
+    },
+    {
+      field: 'yearlyEmployeeBenefitsCost',
+      editable: true
+    },
+    {
+      field: 'yearlyDependantBenefitsCost',
+      editable: true
+    },
+    {
+      field: 'percentEmployeeBenefitsPaidByEmployer',
+      editable: true
+    },
+    {
+      field: 'percentDependantBenefitsPaidByEmployer',
+      editable: true
+    },
+    {
+      headerName: 'Monthly Amount Paid by Company',
+      valueGetter: (params) =>
+      {
+        if (!params.data.annualSalary
+          || !params.data.yearlyEmployeeBenefitsCost
+          || !params.data.yearlyDependantBenefitsCost
+          || !params.data.percentEmployeeBenefitsPaidByEmployer
+          || !params.data.percentDependantBenefitsPaidByEmployer
+          || !params.data.numDependants) {
+          return '';
+        }
+        return (params.data.annualSalary
+          + (params.data.yearlyEmployeeBenefitsCost
+            * params.data.percentEmployeeBenefitsPaidByEmployer / 100)
+          + ((params.data.yearlyDependantBenefitsCost
+            * params.data.percentDependantBenefitsPaidByEmployer / 100)
+            * params.data.numDependants)) / 12;
+      },
+      valueFormatter: (params) => {
+        if (params.value === '') {
+          return '--';
+        }
+        return params.value.toFixed(2);
+      }
+    },
+    {
+      headerName: 'Yearly Amount Paid by Company',
+      valueGetter: (params) =>
+      {
+        if (!params.data.annualSalary
+          || !params.data.yearlyEmployeeBenefitsCost
+          || !params.data.yearlyDependantBenefitsCost
+          || !params.data.percentEmployeeBenefitsPaidByEmployer
+          || !params.data.percentDependantBenefitsPaidByEmployer
+          || !params.data.numDependants) {
+          return '';
+        }
+        return (params.data.annualSalary
+          + (params.data.yearlyEmployeeBenefitsCost
+            * params.data.percentEmployeeBenefitsPaidByEmployer / 100)
+          + ((params.data.yearlyDependantBenefitsCost
+            * params.data.percentDependantBenefitsPaidByEmployer / 100)
+            * params.data.numDependants));
+      },
+      valueFormatter: (params) => {
+        if (params.value === '') {
+          return '--';
+        }
+        return params.value.toFixed(2);
+      }
+    },
+    {
+      headerName: 'Monthly Amount in Employee Paycheck',
+      valueGetter: (params) =>
+      {
+        if (!params.data.annualSalary
+          || !params.data.yearlyEmployeeBenefitsCost
+          || !params.data.yearlyDependantBenefitsCost
+          || !params.data.percentEmployeeBenefitsPaidByEmployer
+          || !params.data.percentDependantBenefitsPaidByEmployer
+          || !params.data.numDependants) {
+          return '';
+        }
+        return (params.data.annualSalary
+          - (params.data.yearlyEmployeeBenefitsCost
+            * (100 - params.data.percentEmployeeBenefitsPaidByEmployer) / 100)
+          - ((params.data.yearlyDependantBenefitsCost
+            * (100 - params.data.percentDependantBenefitsPaidByEmployer) / 100)
+            * params.data.numDependants)) / 12;
+      },
+      valueFormatter: (params) => {
+        if (params.value === '') {
+          return '--';
+        }
+        return params.value.toFixed(2);
+      }
+    },
+    {
+      headerName: 'Yearly Amount in Employee Paycheck',
+      valueGetter: (params) =>
+      {
+        if (!params.data.annualSalary
+          || !params.data.yearlyEmployeeBenefitsCost
+          || !params.data.yearlyDependantBenefitsCost
+          || !params.data.percentEmployeeBenefitsPaidByEmployer
+          || !params.data.percentDependantBenefitsPaidByEmployer
+          || !params.data.numDependants) {
+          return '';
+        }
+        return (params.data.annualSalary
+          - (params.data.yearlyEmployeeBenefitsCost
+            * (100 - params.data.percentEmployeeBenefitsPaidByEmployer) / 100)
+          - ((params.data.yearlyDependantBenefitsCost
+            * (100 - params.data.percentDependantBenefitsPaidByEmployer) / 100)
+            * params.data.numDependants));
+      },
+      valueFormatter: (params) => {
+        if (params.value === '') {
+          return '--';
+        }
+        return params.value.toFixed(2);
+      }
+    }
+  ];
+
+  rowData = [
+    {
+      name: 'Jared Beagley',
+      numDependants: 3,
+      annualSalary: 24000,
+      yearlyEmployeeBenefitsCost: 1000,
+      yearlyDependantBenefitsCost: 500,
+      percentEmployeeBenefitsPaidByEmployer: 100,
+      percentDependantBenefitsPaidByEmployer: 50
+    }
+  ];
+
+  constructor(private ref: ChangeDetectorRef)
+  {}
+
+  addEmployee(): void {
+    const newRowData = this.rowData.concat({
+      name: '',
+      numDependants: null,
+      annualSalary: 24000,
+      yearlyEmployeeBenefitsCost: 1000,
+      yearlyDependantBenefitsCost: 500,
+      percentEmployeeBenefitsPaidByEmployer: 100,
+      percentDependantBenefitsPaidByEmployer: 50
+    });
+    this.rowData = newRowData;
   }
-
 }

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {FormsModule} from '@angular/forms';
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        FormsModule
+        FormsModule,
+        AgGridModule.withComponents([])
     ],
   providers: [],
   bootstrap: [AppComponent]

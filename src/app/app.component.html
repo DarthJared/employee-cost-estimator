@@ -1,13 +1,23 @@
 <h1>Benefits Estimator</h1>
-Employee Name: <input type="text" [(ngModel)]="employeeName"><br>
-Number of Dependants: <input type="number" [(ngModel)]="numDependents"><br>
-Income: <input type="number" [(ngModel)]="income"><br>
-% of Employee Benefits Paid By Employer: <input type="number" [(ngModel)]="percentEmployeeBenefitsPaidByEmployer"><br>
-% of Dependants Benefits Paid By Employer: <input type="number" [(ngModel)]="percentDependantBenefitsPaidByEmployer"><br>
-<button (click)="calculateCost()">Calculate</button><br>
-<div>
-  Cost of Employee to Business: {{costOfEmployeeToBusiness}}
-</div>
-<div>
-  Employee Paycheck Amount: {{employeePaycheckAmount}}
-</div>
+<!--Employee Name: <input type="text" [(ngModel)]="employeeName"><br>-->
+<!--Number of Dependants: <input type="number" [(ngModel)]="numDependents"><br>-->
+<!--Income: <input type="number" [(ngModel)]="income"><br>-->
+<!--% of Employee Benefits Paid By Employer: <input type="number" [(ngModel)]="percentEmployeeBenefitsPaidByEmployer"><br>-->
+<!--% of Dependants Benefits Paid By Employer: <input type="number" [(ngModel)]="percentDependantBenefitsPaidByEmployer"><br>-->
+<!--<button (click)="calculateCost()">Calculate</button><br>-->
+<!--<div>-->
+<!--  Cost of Employee to Business: {{costOfEmployeeToBusiness}}-->
+<!--</div>-->
+<!--<div>-->
+<!--  Employee Paycheck Amount: {{employeePaycheckAmount}}-->
+<!--</div>-->
+
+
+<ag-grid-angular
+  style="width: 100%; height: 500px;"
+  class="ag-theme-alpine"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+>
+</ag-grid-angular>
+<button (click)="addEmployee()">Add Employee</button>
