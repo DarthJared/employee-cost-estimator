@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import {dollarAmountDisplay, getAnnualAmountPaidByCompany, getAnnualEmployeeSalaryAfterDeductions} from '../utils/paycheck.utils';
+import {
+  defaultDetails,
+  dollarAmountDisplay,
+  getAnnualAmountPaidByCompany,
+  getAnnualEmployeeSalaryAfterDeductions
+} from '../utils/paycheck.utils';
 
 @Component({
   selector: 'app-data-grid',
@@ -101,28 +106,10 @@ export class DataGridComponent {
     }
   ];
 
-  rowData = [
-    {
-      name: 'Jared Beagley',
-      numDependants: 3,
-      annualSalary: 52000,
-      yearlyEmployeeBenefitsCost: 1000,
-      yearlyDependantBenefitsCost: 500,
-      percentEmployeeBenefitsPaidByEmployer: 100,
-      percentDependantBenefitsPaidByEmployer: 50
-    }
-  ];
+  rowData = [defaultDetails];
 
   addEmployee(): void {
-    const newRowData = this.rowData.concat({
-      name: '',
-      numDependants: null,
-      annualSalary: 52000,
-      yearlyEmployeeBenefitsCost: 1000,
-      yearlyDependantBenefitsCost: 500,
-      percentEmployeeBenefitsPaidByEmployer: 100,
-      percentDependantBenefitsPaidByEmployer: 50
-    });
+    const newRowData = this.rowData.concat(defaultDetails);
     this.rowData = newRowData;
     this.annualCostToCompany = null;
   }
