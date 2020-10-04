@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {dollarAmountDisplay, getAnnualAmountPaidByCompany, getAnnualEmployeeSalaryAfterDeductions} from './utils/paycheck.utils';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,12 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  // private gridApi;
-  // private gridColumnApi;
+
+  constructor(private ref: ChangeDetectorRef)
+  {}
+
+  annualCostToCompany: number;
+
   columnDefs = [
     {
       field: 'name',
@@ -42,105 +47,61 @@ export class AppComponent {
       headerName: 'Monthly Amount Paid by Company',
       valueGetter: (params) =>
       {
-        if (!params.data.annualSalary
-          || !params.data.yearlyEmployeeBenefitsCost
-          || !params.data.yearlyDependantBenefitsCost
-          || !params.data.percentEmployeeBenefitsPaidByEmployer
-          || !params.data.percentDependantBenefitsPaidByEmployer
-          || !params.data.numDependants) {
-          return '';
-        }
-        return (params.data.annualSalary
-          + (params.data.yearlyEmployeeBenefitsCost
-            * params.data.percentEmployeeBenefitsPaidByEmployer / 100)
-          + ((params.data.yearlyDependantBenefitsCost
-            * params.data.percentDependantBenefitsPaidByEmployer / 100)
-            * params.data.numDependants)) / 12;
+        return getAnnualAmountPaidByCompany(
+          params.data.annualSalary,
+          params.data.yearlyEmployeeBenefitsCost,
+          params.data.yearlyDependantBenefitsCost,
+          params.data.percentEmployeeBenefitsPaidByEmployer,
+          params.data.percentDependantBenefitsPaidByEmployer,
+          params.data.numDependants
+        ) / 12;
       },
-      valueFormatter: (params) => {
-        if (params.value === '') {
-          return '--';
-        }
-        return params.value.toFixed(2);
-      }
+      valueFormatter: dollarAmountDisplay
     },
     {
       headerName: 'Yearly Amount Paid by Company',
       valueGetter: (params) =>
       {
-        if (!params.data.annualSalary
-          || !params.data.yearlyEmployeeBenefitsCost
-          || !params.data.yearlyDependantBenefitsCost
-          || !params.data.percentEmployeeBenefitsPaidByEmployer
-          || !params.data.percentDependantBenefitsPaidByEmployer
-          || !params.data.numDependants) {
-          return '';
-        }
-        return (params.data.annualSalary
-          + (params.data.yearlyEmployeeBenefitsCost
-            * params.data.percentEmployeeBenefitsPaidByEmployer / 100)
-          + ((params.data.yearlyDependantBenefitsCost
-            * params.data.percentDependantBenefitsPaidByEmployer / 100)
-            * params.data.numDependants));
+        return getAnnualAmountPaidByCompany(
+          params.data.annualSalary,
+          params.data.yearlyEmployeeBenefitsCost,
+          params.data.yearlyDependantBenefitsCost,
+          params.data.percentEmployeeBenefitsPaidByEmployer,
+          params.data.percentDependantBenefitsPaidByEmployer,
+          params.data.numDependants
+        );
       },
-      valueFormatter: (params) => {
-        if (params.value === '') {
-          return '--';
-        }
-        return params.value.toFixed(2);
-      }
+      valueFormatter: dollarAmountDisplay
     },
     {
-      headerName: 'Monthly Amount in Employee Paycheck',
+      headerName: 'Monthly Employee Salary After Deductions',
       valueGetter: (params) =>
       {
-        if (!params.data.annualSalary
-          || !params.data.yearlyEmployeeBenefitsCost
-          || !params.data.yearlyDependantBenefitsCost
-          || !params.data.percentEmployeeBenefitsPaidByEmployer
-          || !params.data.percentDependantBenefitsPaidByEmployer
-          || !params.data.numDependants) {
-          return '';
-        }
-        return (params.data.annualSalary
-          - (params.data.yearlyEmployeeBenefitsCost
-            * (100 - params.data.percentEmployeeBenefitsPaidByEmployer) / 100)
-          - ((params.data.yearlyDependantBenefitsCost
-            * (100 - params.data.percentDependantBenefitsPaidByEmployer) / 100)
-            * params.data.numDependants)) / 12;
+        return getAnnualEmployeeSalaryAfterDeductions(
+          params.data.annualSalary,
+          params.data.yearlyEmployeeBenefitsCost,
+          params.data.yearlyDependantBenefitsCost,
+          params.data.percentEmployeeBenefitsPaidByEmployer,
+          params.data.percentDependantBenefitsPaidByEmployer,
+          params.data.numDependants
+        ) / 12;
       },
-      valueFormatter: (params) => {
-        if (params.value === '') {
-          return '--';
-        }
-        return params.value.toFixed(2);
-      }
+      valueFormatter: dollarAmountDisplay
     },
     {
-      headerName: 'Yearly Amount in Employee Paycheck',
+      headerName: 'Yearly Employee Salary After Deductions',
       valueGetter: (params) =>
       {
-        if (!params.data.annualSalary
-          || !params.data.yearlyEmployeeBenefitsCost
-          || !params.data.yearlyDependantBenefitsCost
-          || !params.data.percentEmployeeBenefitsPaidByEmployer
-          || !params.data.percentDependantBenefitsPaidByEmployer
-          || !params.data.numDependants) {
-          return '';
-        }
-        return (params.data.annualSalary
-          - (params.data.yearlyEmployeeBenefitsCost
-            * (100 - params.data.percentEmployeeBenefitsPaidByEmployer) / 100)
-          - ((params.data.yearlyDependantBenefitsCost
-            * (100 - params.data.percentDependantBenefitsPaidByEmployer) / 100)
-            * params.data.numDependants));
+        return getAnnualEmployeeSalaryAfterDeductions(
+          params.data.annualSalary,
+          params.data.yearlyEmployeeBenefitsCost,
+          params.data.yearlyDependantBenefitsCost,
+          params.data.percentEmployeeBenefitsPaidByEmployer,
+          params.data.percentDependantBenefitsPaidByEmployer,
+          params.data.numDependants
+        );
       },
-      valueFormatter: (params) => {
-        if (params.value === '') {
-          return '--';
-        }
-        return params.value.toFixed(2);
-      }
+      valueFormatter: dollarAmountDisplay
     }
   ];
 
@@ -156,9 +117,6 @@ export class AppComponent {
     }
   ];
 
-  constructor(private ref: ChangeDetectorRef)
-  {}
-
   addEmployee(): void {
     const newRowData = this.rowData.concat({
       name: '',
@@ -172,21 +130,11 @@ export class AppComponent {
     this.rowData = newRowData;
   }
 
-  // onGridReady(params): void {
-  //   this.gridApi = params.api;
-  //   this.gridColumnApi = params.columnApi;
-  // }
-  //
-  // onCellValueChanged(params): void {
-  //   console.log('Grid Api:');
-  //   console.log(this.gridApi);
-  //   console.log('Grid Column Api:');
-  //   console.log(this.gridColumnApi);
-  //   console.log('Params:');
-  //   console.log(params);
-  // }
+  onCellValueChanged(params): void {
+    this.annualCostToCompany = this.getAnualCompanyCost();
+  }
 
-  getAnualCompanyCost(): void {
-    // Use rowData to get the current valued
+  getAnualCompanyCost(): number {
+    return (this.annualCostToCompany || 1) + 1;
   }
 }

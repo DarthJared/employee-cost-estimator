@@ -6,9 +6,13 @@
   class="ag-theme-alpine"
   [rowData]="rowData"
   [columnDefs]="columnDefs"
+  (cellValueChanged)="onCellValueChanged($event)"
 >
 </ag-grid-angular>
 <button mat-button color="primary" (click)="addEmployee()">
   <mat-icon>add</mat-icon>
   Add Employee
 </button>
+<div>
+  Annual Cost to Company: {{annualCostToCompany || '--'}}
+</div>
