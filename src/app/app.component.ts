@@ -44,7 +44,7 @@ export class AppComponent {
       editable: true
     },
     {
-      headerName: 'Monthly Amount Paid by Company',
+      headerName: 'Bi-Weekly Amount Paid by Company',
       valueGetter: (params) =>
       {
         return getAnnualAmountPaidByCompany(
@@ -54,7 +54,7 @@ export class AppComponent {
           params.data.percentEmployeeBenefitsPaidByEmployer,
           params.data.percentDependantBenefitsPaidByEmployer,
           params.data.numDependants
-        ) / 12;
+        ) / 26;
       },
       valueFormatter: dollarAmountDisplay
     },
@@ -74,7 +74,7 @@ export class AppComponent {
       valueFormatter: dollarAmountDisplay
     },
     {
-      headerName: 'Monthly Employee Salary After Deductions',
+      headerName: 'Bi-Weekly Employee Salary After Deductions',
       valueGetter: (params) =>
       {
         return getAnnualEmployeeSalaryAfterDeductions(
@@ -84,7 +84,7 @@ export class AppComponent {
           params.data.percentEmployeeBenefitsPaidByEmployer,
           params.data.percentDependantBenefitsPaidByEmployer,
           params.data.numDependants
-        ) / 12;
+        ) / 26;
       },
       valueFormatter: dollarAmountDisplay
     },
@@ -109,7 +109,7 @@ export class AppComponent {
     {
       name: 'Jared Beagley',
       numDependants: 3,
-      annualSalary: 24000,
+      annualSalary: 52000,
       yearlyEmployeeBenefitsCost: 1000,
       yearlyDependantBenefitsCost: 500,
       percentEmployeeBenefitsPaidByEmployer: 100,
@@ -121,7 +121,7 @@ export class AppComponent {
     const newRowData = this.rowData.concat({
       name: '',
       numDependants: null,
-      annualSalary: 24000,
+      annualSalary: 52000,
       yearlyEmployeeBenefitsCost: 1000,
       yearlyDependantBenefitsCost: 500,
       percentEmployeeBenefitsPaidByEmployer: 100,
