@@ -128,6 +128,7 @@ export class AppComponent {
       percentDependantBenefitsPaidByEmployer: 50
     });
     this.rowData = newRowData;
+    this.annualCostToCompany = null;
   }
 
   onCellValueChanged(params): void {
@@ -135,6 +136,15 @@ export class AppComponent {
   }
 
   getAnualCompanyCost(): number {
-    return (this.annualCostToCompany || 1) + 1;
+    return this.rowData.reduce((acc, row) => {
+      return acc + getAnnualAmountPaidByCompany(
+        row.annualSalary,
+        row.yearlyEmployeeBenefitsCost,
+        row.yearlyDependantBenefitsCost,
+        row.percentEmployeeBenefitsPaidByEmployer,
+        row.percentDependantBenefitsPaidByEmployer,
+        row.numDependants
+      );
+    }, 0);
   }
 }
