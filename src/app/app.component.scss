@@ -2,6 +2,7 @@
   display: inline-block;
   width: calc(100% - 517px);
 }
+
 .annual-total {
   display: inline-block;
   width: 500px;
@@ -12,4 +13,15 @@
   padding-left: 15px;
   border: solid 1px #00000044;
   border-bottom-left-radius: 20px;
+}
+
+.data-grid {
+  width: 100%;
+  max-height: calc(100% - 130px);
+  overflow: auto;
+  border: solid 1px #00000044;
+}
+
+.full-screen-grid {
+  height: calc(100% - 130px);
 }

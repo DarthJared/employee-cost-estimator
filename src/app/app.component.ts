@@ -12,6 +12,7 @@ export class AppComponent {
   constructor(private ref: ChangeDetectorRef)
   {}
 
+  domLayout = 'autoHeight';
   annualCostToCompany: number;
 
   columnDefs = [
@@ -132,6 +133,9 @@ export class AppComponent {
   }
 
   onCellValueChanged(params): void {
+    if (this.rowData.length > 150) {
+      this.domLayout = '';
+    }
     this.annualCostToCompany = this.getAnualCompanyCost();
   }
 
