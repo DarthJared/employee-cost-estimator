@@ -9,10 +9,12 @@ import { AgGridModule } from 'ag-grid-angular';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { DataGridComponent } from './data-grid/data-grid.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DataGridComponent
   ],
     imports: [
         BrowserModule,

@@ -1,0 +1,18 @@
+<ag-grid-angular
+  class="ag-theme-alpine data-grid"
+  [ngClass]="{'full-screen-grid': domLayout != 'autoHeight'}"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  (cellValueChanged)="onCellValueChanged($event)"
+  [domLayout]="domLayout"
+>
+</ag-grid-angular>
+<div class="add-employee">
+  <button mat-button color="primary" (click)="addEmployee()">
+    <mat-icon>add</mat-icon>
+    Add Employee
+  </button>
+</div>
+<div class="annual-total">
+  Annual Cost to Company: {{(annualCostToCompany | currency) || '--'}}
+</div>
