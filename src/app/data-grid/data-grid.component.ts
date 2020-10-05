@@ -4,7 +4,7 @@ import {
   getAnnualEmployeeSalaryAfterDeductions
 } from '../utils/paycheck.utils';
 import {RemoveCellComponent} from '../remove-cell/remove-cell.component';
-import {defaultDetails, dollarAmountDisplay, namePlaceholderRenderer} from '../utils/grid.utils';
+import {getDefaultDetails, dollarAmountDisplay, getPlaceholderRenderer} from '../utils/grid.utils';
 
 @Component({
   selector: 'app-data-grid',
@@ -14,23 +14,31 @@ import {defaultDetails, dollarAmountDisplay, namePlaceholderRenderer} from '../u
 export class DataGridComponent {
   domLayout = 'autoHeight';
   annualCostToCompany: number;
+  gridApi;
+  gridColumnApi;
 
   columnDefs = [
     {
       headerName: '',
       cellRenderer: 'removeCellComponent',
-      width: 60
+      width: 60,
+      cellRendererParams: {
+        clicked: () => {
+          this.onCellValueChanged(null);
+        }
+      },
     },
     {
       field: 'name',
       editable: true,
-      // valueFormatter: namePlaceholderRenderer
+      valueFormatter: getPlaceholderRenderer('name')
     },
     {
       headerName: 'Number of Dependants',
       field: 'numDependants',
       editable: true,
-      width: 200
+      width: 250,
+      valueFormatter: getPlaceholderRenderer('number of dependants')
     },
     {
       field: 'annualSalary',
@@ -129,24 +137,41 @@ export class DataGridComponent {
     removeCellComponent: RemoveCellComponent
   };
 
-  rowData = [defaultDetails];
+  rowData = [getDefaultDetails()];
+
+  getCurrentRowData(): any {
+    const currentRowData = [];
+    this.gridApi.forEachNode((rowNode, index) => {
+      currentRowData.push(rowNode.data);
+    });
+    return currentRowData;
+  }
 
   addEmployee(): void {
-    const newRowData = this.rowData.concat(defaultDetails);
-    this.rowData = newRowData;
+    const updatedRowData = this.getCurrentRowData();
+    updatedRowData.push(getDefaultDetails());
+    this.rowData = updatedRowData;
     this.annualCostToCompany = null;
   }
 
   onCellValueChanged(params): void {
-    if (this.rowData.length > 150) {
+    const currentRows = this.getCurrentRowData();
+    if (currentRows.length > 150) {
       this.domLayout = '';
     }
     this.annualCostToCompany = this.getAnualCompanyCost();
   }
 
+  onGridReady(params): void {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
   getAnualCompanyCost(): number {
-    return this.rowData.reduce((acc, row) => {
-      return acc + getAnnualAmountPaidByCompany(
+    let missingData = false;
+    const currentRowData = this.getCurrentRowData();
+    const finalCost = currentRowData.reduce((acc, row) => {
+      const companyCost = getAnnualAmountPaidByCompany(
         row.annualSalary,
         row.yearlyEmployeeBenefitsCost,
         row.yearlyDependantBenefitsCost,
@@ -154,6 +179,14 @@ export class DataGridComponent {
         row.percentDependantBenefitsPaidByEmployer,
         row.numDependants
       );
+      if (!companyCost) {
+        missingData = true;
+      }
+      return acc + companyCost;
     }, 0);
+    if (missingData) {
+      return null;
+    }
+    return finalCost;
   }
 }
