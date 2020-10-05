@@ -21,7 +21,7 @@ export class RemoveCellComponent implements ICellRendererAngularComp, OnDestroy 
     return false;
   }
 
-  removeRow(event): void {
+  removeRow(): void {
     this.params.node.gridApi.updateRowData({ remove: [this.params.node.data] });
     this.params.clicked();
   }

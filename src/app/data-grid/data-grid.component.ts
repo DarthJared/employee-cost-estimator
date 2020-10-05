@@ -13,10 +13,9 @@ export class DataGridComponent {
   annualCostToCompany: number;
   gridApi;
   gridColumnApi;
-
-  rowData = [this.gridService.getDefaultDetails()];
-  columnDefs;
   frameworkComponents;
+  columnDefs;
+  rowData = [this.gridService.getDefaultDetails()];
 
   constructor(private cd: ChangeDetectorRef, private gridService: GridService, private calcService: CalculationService) {
     this.columnDefs = gridService.getColumnDefs();
@@ -44,13 +43,6 @@ export class DataGridComponent {
     return currentRowData;
   }
 
-  addEmployee(): void {
-    const updatedRowData = this.getCurrentRowData();
-    updatedRowData.push(this.gridService.getDefaultDetails());
-    this.rowData = updatedRowData;
-    this.annualCostToCompany = null;
-  }
-
   onCellValueChanged(): void {
     const currentRows = this.getCurrentRowData();
     if (currentRows.length > 150) {
@@ -58,6 +50,13 @@ export class DataGridComponent {
     }
     this.annualCostToCompany = this.calcService.getAnnualCompanyCost(currentRows);
     this.cd.markForCheck();
+  }
+
+  addEmployee(): void {
+    const updatedRowData = this.getCurrentRowData();
+    updatedRowData.push(this.gridService.getDefaultDetails());
+    this.rowData = updatedRowData;
+    this.annualCostToCompany = null;
   }
 
   importData(importedData: any): void {

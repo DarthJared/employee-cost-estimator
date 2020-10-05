@@ -138,7 +138,7 @@ export class GridService {
     }
   ];
 
-  frameworkComponents = {
+  private frameworkComponents = {
     removeCellComponent: RemoveCellComponent
   };
 
@@ -160,11 +160,11 @@ export class GridService {
     };
   }
 
-  numberValueParser(params): number {
+  private numberValueParser(params): number {
     return Number(params.newValue);
   }
 
-  getPlaceholderRenderer(field: string): any {
+  private getPlaceholderRenderer(field: string): any {
     return (params) => {
       if (params.value) {
         return params.value;

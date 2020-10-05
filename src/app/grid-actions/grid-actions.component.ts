@@ -59,7 +59,7 @@ export class GridActionsComponent {
     this.employeeAdded.emit();
   }
 
-  applyImportedData(data: any): any {
+  private applyImportedData(data: any): any {
     const importedData = [];
     for (let i = 0; i < data[0].length; i++) {
       for (let j = 1; j < data.length; j++) {
@@ -96,7 +96,7 @@ export class GridActionsComponent {
     reader.readAsBinaryString(target.files[0]);
   }
 
-  getExcelFormatData(template: boolean): any {
+  private getExcelFormatData(template: boolean): any {
     const props = [];
     const headerRow = [];
     if (template) {
