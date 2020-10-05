@@ -1,0 +1,19 @@
+<div class="grid-actions">
+  <button mat-button color="primary" (click)="addEmployee()">
+    <mat-icon>add</mat-icon>
+    Add Employee
+  </button>
+  <button mat-button color="primary" (click)="fileInput.click()">
+    <mat-icon>publish</mat-icon>
+    <span>Import</span>
+    <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />
+  </button>
+  <button mat-button color="primary" (click)="downloadData(false)">
+    <mat-icon>get_app</mat-icon>
+    Download
+  </button>
+  <button mat-button color="primary" (click)="downloadData(true)">
+    <mat-icon>get_app</mat-icon>
+    Download Import Template
+  </button>
+</div>

@@ -11,12 +11,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { RemoveCellComponent } from './remove-cell/remove-cell.component';
+import { GridActionsComponent } from './grid-actions/grid-actions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DataGridComponent,
-    RemoveCellComponent
+    RemoveCellComponent,
+    GridActionsComponent
   ],
     imports: [
         BrowserModule,

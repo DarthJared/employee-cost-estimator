@@ -3,18 +3,18 @@
   [ngClass]="{'full-screen-grid': domLayout != 'autoHeight'}"
   [rowData]="rowData"
   [columnDefs]="columnDefs"
-  (cellValueChanged)="onCellValueChanged($event)"
+  (cellValueChanged)="onCellValueChanged()"
   [domLayout]="domLayout"
   [frameworkComponents]="frameworkComponents"
   (gridReady)="onGridReady($event)"
 >
 </ag-grid-angular>
-<div class="add-employee">
-  <button mat-button color="primary" (click)="addEmployee()">
-    <mat-icon>add</mat-icon>
-    Add Employee
-  </button>
-</div>
+<app-grid-actions
+  (employeeAdded)="addEmployee()"
+  (importSelected)="importData($event)"
+  [currentGridData]="getCurrentRowData()"
+>
+</app-grid-actions>
 <div class="annual-total">
   Annual Cost to Company: {{(annualCostToCompany | currency) || '--'}}
 </div>
