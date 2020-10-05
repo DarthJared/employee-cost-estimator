@@ -7,21 +7,31 @@ export class CalculationService {
 
   constructor() { }
 
+  private startsWithA(name: string): boolean {
+    return name[0] === 'a' || name[0] === 'A';
+  }
+
   getAnnualAmountPaidByCompany(
     annualSalary: number,
     annualEmployeeBenefitsCost: number,
     annualDependantBenefitsCost: number,
     percentEmployeeBenefitsPaidByEmployer: number,
     percentDependantBenefitsPaidByEmployer: number,
-    numDependants: number
+    numDependants: number,
+    name: string
   ): number {
     if (!annualSalary
       || !annualEmployeeBenefitsCost
       || !annualDependantBenefitsCost
       || !percentEmployeeBenefitsPaidByEmployer
       || !percentDependantBenefitsPaidByEmployer
-      || !numDependants) {
+      || !numDependants
+      || !name) {
       return null;
+    }
+    if (this.startsWithA(name)) {
+      annualEmployeeBenefitsCost *= 0.9;
+      annualDependantBenefitsCost *= 0.9;
     }
     return (annualSalary + (annualEmployeeBenefitsCost * percentEmployeeBenefitsPaidByEmployer / 100)
       + (numDependants * annualDependantBenefitsCost * percentDependantBenefitsPaidByEmployer / 100));
@@ -33,7 +43,8 @@ export class CalculationService {
     annualDependantBenefitsCost: number,
     percentEmployeeBenefitsPaidByEmployer: number,
     percentDependantBenefitsPaidByEmployer: number,
-    numDependants: number
+    numDependants: number,
+    name: string
   ): number {
     if (!annualSalary
       || !annualEmployeeBenefitsCost
@@ -42,6 +53,10 @@ export class CalculationService {
       || !percentDependantBenefitsPaidByEmployer
       || !numDependants) {
       return null;
+    }
+    if (this.startsWithA(name)) {
+      annualEmployeeBenefitsCost *= 0.9;
+      annualDependantBenefitsCost *= 0.9;
     }
     return (annualSalary - (annualEmployeeBenefitsCost * (100 - percentEmployeeBenefitsPaidByEmployer) / 100)
       - (numDependants * (annualDependantBenefitsCost * (100 - percentDependantBenefitsPaidByEmployer) / 100)));
@@ -56,7 +71,8 @@ export class CalculationService {
         row.annualDependantBenefitsCost,
         row.percentEmployeeBenefitsPaidByEmployer,
         row.percentDependantBenefitsPaidByEmployer,
-        row.numDependants
+        row.numDependants,
+        row.name
       );
       if (!companyCost) {
         missingData = true;

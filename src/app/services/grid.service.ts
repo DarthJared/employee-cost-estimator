@@ -77,7 +77,8 @@ export class GridService {
           params.data.annualDependantBenefitsCost,
           params.data.percentEmployeeBenefitsPaidByEmployer,
           params.data.percentDependantBenefitsPaidByEmployer,
-          params.data.numDependants
+          params.data.numDependants,
+          params.data.name
         ) / 26;
       },
       valueFormatter: this.dollarAmountDisplay
@@ -93,7 +94,8 @@ export class GridService {
           params.data.annualDependantBenefitsCost,
           params.data.percentEmployeeBenefitsPaidByEmployer,
           params.data.percentDependantBenefitsPaidByEmployer,
-          params.data.numDependants
+          params.data.numDependants,
+          params.data.name
         ) / 26;
       },
       valueFormatter: this.dollarAmountDisplay
@@ -110,7 +112,8 @@ export class GridService {
           params.data.annualDependantBenefitsCost,
           params.data.percentEmployeeBenefitsPaidByEmployer,
           params.data.percentDependantBenefitsPaidByEmployer,
-          params.data.numDependants
+          params.data.numDependants,
+          params.data.name
         );
       },
       valueFormatter: this.dollarAmountDisplay
@@ -127,7 +130,8 @@ export class GridService {
           params.data.annualDependantBenefitsCost,
           params.data.percentEmployeeBenefitsPaidByEmployer,
           params.data.percentDependantBenefitsPaidByEmployer,
-          params.data.numDependants
+          params.data.numDependants,
+          params.data.name
         );
       },
       valueFormatter: this.dollarAmountDisplay
