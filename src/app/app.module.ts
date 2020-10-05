@@ -10,11 +10,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { DataGridComponent } from './data-grid/data-grid.component';
+import { RemoveCellComponent } from './remove-cell/remove-cell.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataGridComponent
+    DataGridComponent,
+    RemoveCellComponent
   ],
     imports: [
         BrowserModule,
@@ -24,7 +26,7 @@ import { DataGridComponent } from './data-grid/data-grid.component';
         MatToolbarModule,
         MatButtonModule,
         MatIconModule,
-        AgGridModule.withComponents([])
+        AgGridModule.withComponents([RemoveCellComponent])
     ],
   providers: [],
   bootstrap: [AppComponent]
