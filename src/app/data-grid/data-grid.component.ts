@@ -41,7 +41,6 @@ export class DataGridComponent {
     this.gridApi.forEachNode((rowNode, index) => {
       currentRowData.push(rowNode.data);
     });
-    console.log(currentRowData);
     return currentRowData;
   }
 
