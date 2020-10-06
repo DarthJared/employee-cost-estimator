@@ -9,7 +9,7 @@ export class ExcelService {
 
   constructor(private gridService: GridService) { }
 
-  private applyImportedData(data: any): any {
+  applyImportedData(data: any): any {
     const importedData = [];
     for (let i = 0; i < data[0].length; i++) {
       for (let j = 1; j < data.length; j++) {
@@ -22,7 +22,7 @@ export class ExcelService {
     return importedData;
   }
 
-  onFileChange(evt: any, callback): void {
+  readExcelData(evt: any, callback): void {
     /* wire up file reader */
     const target: DataTransfer = evt.target as DataTransfer;
     if (target.files.length !== 1) {
@@ -46,7 +46,7 @@ export class ExcelService {
     reader.readAsBinaryString(target.files[0]);
   }
 
-  private getExcelFormatData(template: boolean, currentGridData): any {
+  getExcelFormatData(template: boolean, currentGridData): any {
     const props = [];
     const headerRow = [];
     if (template) {

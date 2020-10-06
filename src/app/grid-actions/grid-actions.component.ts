@@ -20,7 +20,7 @@ export class GridActionsComponent {
   }
 
   onFileChange(evt: any): void {
-    this.excelService.onFileChange(evt, (importedData) => {
+    this.excelService.readExcelData(evt, (importedData) => {
       this.importSelected.emit(importedData);
     });
   }
