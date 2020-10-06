@@ -12,47 +12,6 @@ export class GridActionsComponent {
   @Output() importSelected = new EventEmitter();
   @Input() currentGridData;
 
-  columnTitlesToProps = {
-    Name: 'name',
-    'Number of Dependants': 'numDependants',
-    'Annual Salary': 'annualSalary',
-    'Annual Employee Benefits Cost': 'annualEmployeeBenefitsCost',
-    'Annual Dependants Benefits Cost': 'annualDependantBenefitsCost',
-    '% Employee Benefits Paid By Employer': 'percentEmployeeBenefitsPaidByEmployer',
-    '% Dependant Benefits Paid By Employer': 'percentDependantBenefitsPaidByEmployer'
-  };
-
-  columnPropToColumnInfo = {
-    name: {
-      title: 'Name',
-      width: 40
-    },
-    numDependants: {
-      title: 'Number of Dependants',
-      width: 25
-    },
-    annualSalary: {
-      title: 'Annual Salary',
-      width: 25
-    },
-    annualEmployeeBenefitsCost: {
-      title: 'Annual Employee Benefits Cost',
-      width: 40
-    },
-    annualDependantBenefitsCost: {
-      title: 'Annual Dependants Benefits Cost',
-      width: 40
-    },
-    percentEmployeeBenefitsPaidByEmployer: {
-      title: '% Employee Benefits Paid By Employer',
-      width: 40
-    },
-    percentDependantBenefitsPaidByEmployer: {
-      title: '% Dependant Benefits Paid By Employer',
-      width: 40
-    }
-  };
-
   constructor(private gridService: GridService) { }
 
   addEmployee(): void {
@@ -66,7 +25,7 @@ export class GridActionsComponent {
         if (i === 0) {
           importedData.push(this.gridService.getDefaultDetails());
         }
-        importedData[j - 1][this.columnTitlesToProps[data[0][i]]] = data[j][i];
+        importedData[j - 1][this.gridService.getColumnTitlesToProps[data[0][i]]] = data[j][i];
       }
     }
     return importedData;
@@ -100,14 +59,14 @@ export class GridActionsComponent {
     const props = [];
     const headerRow = [];
     if (template) {
-      for (const columnName of Object.keys(this.columnTitlesToProps)) {
+      for (const columnName of Object.keys(this.gridService.getColumnTitlesToProps)) {
         headerRow.push(columnName);
       }
       return [headerRow];
     }
     for (const columnName of Object.keys(this.currentGridData[0])) {
       props.push(columnName);
-      headerRow.push(this.columnPropToColumnInfo[columnName].title);
+      headerRow.push(this.gridService.getColumnPropToColumnInfo[columnName].title);
     }
     const dataRows = [headerRow];
     for (const row of this.currentGridData) {
@@ -124,9 +83,9 @@ export class GridActionsComponent {
     /* generate worksheet */
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.getExcelFormatData(template));
     const wscols = [];
-    for (const columnKey of Object.keys(this.columnPropToColumnInfo)){
+    for (const columnKey of Object.keys(this.gridService.getColumnPropToColumnInfo)){
       wscols.push({
-        wch: this.columnPropToColumnInfo[columnKey].width
+        wch: this.gridService.getColumnPropToColumnInfo[columnKey].width
       });
     }
 

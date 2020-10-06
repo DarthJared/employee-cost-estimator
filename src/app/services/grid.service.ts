@@ -142,6 +142,47 @@ export class GridService {
     removeCellComponent: RemoveCellComponent
   };
 
+  private columnTitlesToProps = {
+    Name: 'name',
+    'Number of Dependants': 'numDependants',
+    'Annual Salary': 'annualSalary',
+    'Annual Employee Benefits Cost': 'annualEmployeeBenefitsCost',
+    'Annual Dependants Benefits Cost': 'annualDependantBenefitsCost',
+    '% Employee Benefits Paid By Employer': 'percentEmployeeBenefitsPaidByEmployer',
+    '% Dependant Benefits Paid By Employer': 'percentDependantBenefitsPaidByEmployer'
+  };
+
+  private columnPropToColumnInfo = {
+    name: {
+      title: 'Name',
+      width: 40
+    },
+    numDependants: {
+      title: 'Number of Dependants',
+      width: 25
+    },
+    annualSalary: {
+      title: 'Annual Salary',
+      width: 25
+    },
+    annualEmployeeBenefitsCost: {
+      title: 'Annual Employee Benefits Cost',
+      width: 40
+    },
+    annualDependantBenefitsCost: {
+      title: 'Annual Dependants Benefits Cost',
+      width: 40
+    },
+    percentEmployeeBenefitsPaidByEmployer: {
+      title: '% Employee Benefits Paid By Employer',
+      width: 40
+    },
+    percentDependantBenefitsPaidByEmployer: {
+      title: '% Dependant Benefits Paid By Employer',
+      width: 40
+    }
+  };
+
   constructor(private calcService: CalculationService) { }
 
   getColumnDefs(): any {
@@ -150,6 +191,14 @@ export class GridService {
 
   getFrameworkComponents(): any {
     return this.frameworkComponents;
+  }
+
+  getColumnPropToColumnInfo(): any {
+    return this.columnPropToColumnInfo;
+  }
+
+  getColumnTitlesToProps(): any {
+    return this.columnTitlesToProps;
   }
 
   getDefaultDetails(): any {
