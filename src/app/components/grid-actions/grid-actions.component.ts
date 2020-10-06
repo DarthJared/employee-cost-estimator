@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GridService} from '../services/grid.service';
-import {ExcelService} from '../services/excel.service';
+import {GridService} from '../../services/grid.service';
+import {ExcelService} from '../../services/excel.service';
 
 @Component({
   selector: 'app-grid-actions',

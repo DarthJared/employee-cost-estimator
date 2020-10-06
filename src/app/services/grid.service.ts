@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {RemoveCellComponent} from '../remove-cell/remove-cell.component';
+import {RemoveCellComponent} from '../components/remove-cell/remove-cell.component';
 import {CalculationService} from './calculation.service';
 import {ColDef, GridOptions} from 'ag-grid-community';
 import {FinancialRowData} from '../data-typing/financial-row-data';
