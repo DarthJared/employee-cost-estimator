@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import {GridService} from './grid.service';
 import {ColInfo} from 'xlsx';
-import {FinancialRowData} from './financial-row-data';
-import {ExcelGridData, ExcelRowData} from './excel-data';
+import {FinancialRowData} from '../data-typing/financial-row-data';
+import {ExcelGridData, ExcelRowData} from '../data-typing/excel-data';
 
 @Injectable({
   providedIn: 'root'

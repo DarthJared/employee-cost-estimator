@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/co
 import {GridService} from '../services/grid.service';
 import {CalculationService} from '../services/calculation.service';
 import {ColDef, GridApi} from 'ag-grid-community';
-import {FinancialRowData} from '../services/financial-row-data';
+import {FinancialRowData} from '../data-typing/financial-row-data';
 
 @Component({
   selector: 'app-data-grid',

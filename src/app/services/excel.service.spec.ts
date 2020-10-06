@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ExcelService } from './excel.service';
-import {FinancialRowData} from './financial-row-data';
-import {ExcelGridData} from './excel-data';
+import {FinancialRowData} from '../data-typing/financial-row-data';
+import {ExcelGridData} from '../data-typing/excel-data';
 
 describe('ExcelService', () => {
   let service: ExcelService;

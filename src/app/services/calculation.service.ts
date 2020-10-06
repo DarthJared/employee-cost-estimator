@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FinancialRowData} from './financial-row-data';
+import {FinancialRowData} from '../data-typing/financial-row-data';
 
 @Injectable({
   providedIn: 'root'

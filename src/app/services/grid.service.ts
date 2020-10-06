@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {RemoveCellComponent} from '../remove-cell/remove-cell.component';
 import {CalculationService} from './calculation.service';
 import {ColDef, GridOptions} from 'ag-grid-community';
-import {FinancialRowData} from './financial-row-data';
-import {ColumnPropToColumnInfoMap, ColumnTitleToColumnPropMap} from './table-value-conversion';
+import {FinancialRowData} from '../data-typing/financial-row-data';
+import {ColumnPropToColumnInfoMap, ColumnTitleToColumnPropMap} from '../data-typing/table-value-conversion';
 
 @Injectable({
   providedIn: 'root'

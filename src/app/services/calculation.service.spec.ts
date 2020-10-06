@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CalculationService } from './calculation.service';
-import {FinancialRowData} from './financial-row-data';
+import {FinancialRowData} from '../data-typing/financial-row-data';
 
 describe('CalculationService', () => {
   let service: CalculationService;
