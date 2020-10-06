@@ -6,7 +6,7 @@ import {CalculationService} from './calculation.service';
   providedIn: 'root'
 })
 export class GridService {
-  dollarAmountDisplay = (params) => {
+  private dollarAmountDisplay = (params) => {
     if (!params.value) {
       return '--';
     }
@@ -144,6 +144,10 @@ export class GridService {
 
   constructor(private calcService: CalculationService) { }
 
+  getColumnDefs(): any {
+    return this.columnDefs;
+  }
+
   getFrameworkComponents(): any {
     return this.frameworkComponents;
   }
@@ -171,9 +175,5 @@ export class GridService {
       }
       return `Enter ${field}...`;
     };
-  }
-
-  getColumnDefs(): any {
-    return this.columnDefs;
   }
 }
