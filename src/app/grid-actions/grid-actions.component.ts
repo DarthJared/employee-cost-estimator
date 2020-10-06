@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import * as XLSX from 'xlsx';
 import {GridService} from '../services/grid.service';
 import {ExcelService} from '../services/excel.service';
 
@@ -19,7 +18,7 @@ export class GridActionsComponent {
     this.employeeAdded.emit();
   }
 
-  onFileChange(evt: any): void {
+  onFileChange(evt): void {
     this.excelService.readExcelData(evt, (importedData) => {
       this.importSelected.emit(importedData);
     });

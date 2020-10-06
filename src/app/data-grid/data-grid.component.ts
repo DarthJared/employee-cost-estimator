@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {GridService} from '../services/grid.service';
 import {CalculationService} from '../services/calculation.service';
+import {ColDef, GridApi} from 'ag-grid-community';
+import {FinancialRowData} from '../services/financial-row-data';
 
 @Component({
   selector: 'app-data-grid',
@@ -11,11 +13,10 @@ import {CalculationService} from '../services/calculation.service';
 export class DataGridComponent {
   domLayout = 'autoHeight';
   annualCostToCompany: number;
-  gridApi;
-  gridColumnApi;
+  gridApi: GridApi;
   frameworkComponents;
-  columnDefs;
-  rowData = [this.gridService.getDefaultDetails()];
+  columnDefs: ColDef[];
+  rowData: FinancialRowData[] = [this.gridService.getDefaultDetails()];
 
   constructor(private cd: ChangeDetectorRef, private gridService: GridService, private calcService: CalculationService) {
     this.columnDefs = gridService.getColumnDefs();
@@ -29,11 +30,10 @@ export class DataGridComponent {
 
   onGridReady(params): void {
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
   }
 
   getCurrentRowData(): any {
-    const currentRowData = [];
+    const currentRowData: FinancialRowData[] = [];
     if (!this.gridApi) {
       return currentRowData;
     }
@@ -44,7 +44,7 @@ export class DataGridComponent {
   }
 
   onCellValueChanged(): void {
-    const currentRows = this.getCurrentRowData();
+    const currentRows: FinancialRowData[] = this.getCurrentRowData();
     if (currentRows.length > 150) {
       this.domLayout = '';
     }
@@ -53,7 +53,7 @@ export class DataGridComponent {
   }
 
   addEmployee(): void {
-    const updatedRowData = this.getCurrentRowData();
+    const updatedRowData: FinancialRowData[] = this.getCurrentRowData();
     updatedRowData.push(this.gridService.getDefaultDetails());
     this.rowData = updatedRowData;
     this.annualCostToCompany = null;

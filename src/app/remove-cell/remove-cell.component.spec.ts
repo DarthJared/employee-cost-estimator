@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RemoveCellComponent } from './remove-cell.component';
 
 describe('RemoveCellComponent', () => {

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-
 import { ExcelService } from './excel.service';
+import {FinancialRowData} from './financial-row-data';
+import {ExcelGridData} from './excel-data';
 
 describe('ExcelService', () => {
   let service: ExcelService;
@@ -15,7 +16,7 @@ describe('ExcelService', () => {
   });
 
   it('should transform imported data from array of arrays to array of objects', () => {
-    const MockExcelData = [
+    const MockExcelData: ExcelGridData = [
       [
         'name',
         'numDependants',
@@ -44,7 +45,7 @@ describe('ExcelService', () => {
         0
       ]
     ];
-    const tableFormattedData = service.applyImportedData(MockExcelData);
+    const tableFormattedData: FinancialRowData[] = service.applyImportedData(MockExcelData);
     tableFormattedData.forEach((tableRow) => {
       expect(typeof tableRow).toEqual('object');
     });
@@ -52,7 +53,7 @@ describe('ExcelService', () => {
   });
 
   it('should transform imported data from array of arrays to array of objects', () => {
-    const MockGridData = [
+    const MockGridData: FinancialRowData[] = [
       {
         name: 'Mr. Tester',
         numDependants: 1,
@@ -72,7 +73,7 @@ describe('ExcelService', () => {
         percentDependantBenefitsPaidByEmployer: 0
       }
     ];
-    const excelFormattedData = service.getExcelFormatData(false, MockGridData);
+    const excelFormattedData: ExcelGridData = service.getExcelFormatData(false, MockGridData);
     excelFormattedData.forEach((rowData) => {
       expect(typeof rowData).toEqual('object');
     });
@@ -80,7 +81,7 @@ describe('ExcelService', () => {
   });
 
   it('should return 1 row for defaulted download', () => {
-    const MockGridData = [
+    const MockGridData: FinancialRowData[] = [
       {
         name: 'Mr. Tester',
         numDependants: 1,
@@ -100,7 +101,7 @@ describe('ExcelService', () => {
         percentDependantBenefitsPaidByEmployer: 0
       }
     ];
-    const excelFormattedData = service.getExcelFormatData(true, MockGridData);
+    const excelFormattedData: ExcelGridData = service.getExcelFormatData(true, MockGridData);
     expect(excelFormattedData.length).toEqual(1);
   });
 });

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {FinancialRowData} from './financial-row-data';
 
 @Injectable({
   providedIn: 'root'
@@ -62,9 +63,9 @@ export class CalculationService {
       - (numDependants * (annualDependantBenefitsCost * (100 - percentDependantBenefitsPaidByEmployer) / 100)));
   }
 
-  getAnnualCompanyCost(rowData): number {
+  getAnnualCompanyCost(rowData: FinancialRowData[]): number {
     let missingData = false;
-    const finalCost = rowData.reduce((acc, row) => {
+    const finalCost: number = rowData.reduce((acc, row) => {
       const companyCost = this.getAnnualAmountPaidByCompany(
         row.annualSalary,
         row.annualEmployeeBenefitsCost,

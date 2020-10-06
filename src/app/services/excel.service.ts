@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import {GridService} from './grid.service';
+import {ColInfo} from 'xlsx';
+import {FinancialRowData} from './financial-row-data';
+import {ExcelGridData, ExcelRowData} from './excel-data';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +12,8 @@ export class ExcelService {
 
   constructor(private gridService: GridService) { }
 
-  applyImportedData(data: any): any {
-    const importedData = [];
+  applyImportedData(data: ExcelGridData): FinancialRowData[] {
+    const importedData: FinancialRowData[] = [];
     for (let i = 0; i < data[0].length; i++) {
       for (let j = 1; j < data.length; j++) {
         if (i === 0) {
@@ -22,7 +25,7 @@ export class ExcelService {
     return importedData;
   }
 
-  readExcelData(evt: any, callback): void {
+  readExcelData(evt, callback): void {
     /* wire up file reader */
     const target: DataTransfer = evt.target as DataTransfer;
     if (target.files.length !== 1) {
@@ -39,16 +42,16 @@ export class ExcelService {
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
       /* save data */
-      const data = (XLSX.utils.sheet_to_json(ws, {header: 1}));
-      const importedData = this.applyImportedData(data);
+      const data: ExcelGridData = (XLSX.utils.sheet_to_json(ws, {header: 1}));
+      const importedData: FinancialRowData[] = this.applyImportedData(data);
       callback(importedData);
     };
     reader.readAsBinaryString(target.files[0]);
   }
 
-  getExcelFormatData(template: boolean, currentGridData): any {
-    const props = [];
-    const headerRow = [];
+  getExcelFormatData(template: boolean, currentGridData: FinancialRowData[]): ExcelGridData {
+    const props: ExcelRowData = [];
+    const headerRow: ExcelRowData = [];
     if (template) {
       for (const columnName of Object.keys(this.gridService.getColumnTitlesToProps())) {
         headerRow.push(columnName);
@@ -59,9 +62,9 @@ export class ExcelService {
       props.push(columnName);
       headerRow.push(this.gridService.getColumnPropToColumnInfo()[columnName].title);
     }
-    const dataRows = [headerRow];
+    const dataRows: ExcelGridData = [headerRow];
     for (const row of currentGridData) {
-      const rowData = [];
+      const rowData: ExcelRowData = [];
       for (const columnName of props) {
         rowData.push(row[columnName]);
       }
@@ -70,10 +73,10 @@ export class ExcelService {
     return dataRows;
   }
 
-  downloadData(template: boolean, currentGridData): void {
+  downloadData(template: boolean, currentGridData: FinancialRowData[]): void {
     /* generate worksheet */
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.getExcelFormatData(template, currentGridData));
-    const wscols = [];
+    const wscols: ColInfo[] = [];
     for (const columnKey of Object.keys(this.gridService.getColumnPropToColumnInfo())){
       wscols.push({
         wch: this.gridService.getColumnPropToColumnInfo()[columnKey].width

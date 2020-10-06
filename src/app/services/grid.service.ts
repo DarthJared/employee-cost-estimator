@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import {RemoveCellComponent} from '../remove-cell/remove-cell.component';
 import {CalculationService} from './calculation.service';
+import {ColDef, GridOptions} from 'ag-grid-community';
+import {FinancialRowData} from './financial-row-data';
+import {ColumnPropToColumnInfoMap, ColumnTitleToColumnPropMap} from './table-value-conversion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GridService {
-  private dollarAmountDisplay = (params) => {
+  private dollarAmountDisplay = (params): string => {
     if (!params.value) {
       return '--';
     }
     return params.value.toFixed(2);
   }
 
-  private columnDefs = [
+  private columnDefs: ColDef[] = [
     {
       headerName: '',
       pinned: 'left',
@@ -142,7 +145,7 @@ export class GridService {
     removeCellComponent: RemoveCellComponent
   };
 
-  private columnTitlesToProps = {
+  private columnTitlesToProps: ColumnTitleToColumnPropMap = {
     Name: 'name',
     'Number of Dependants': 'numDependants',
     'Annual Salary': 'annualSalary',
@@ -152,7 +155,7 @@ export class GridService {
     '% Dependant Benefits Paid By Employer': 'percentDependantBenefitsPaidByEmployer'
   };
 
-  private columnPropToColumnInfo = {
+  private columnPropToColumnInfo: ColumnPropToColumnInfoMap = {
     name: {
       title: 'Name',
       width: 40
@@ -185,7 +188,7 @@ export class GridService {
 
   constructor(private calcService: CalculationService) { }
 
-  getColumnDefs(): any {
+  getColumnDefs(): ColDef[] {
     return this.columnDefs;
   }
 
@@ -193,15 +196,15 @@ export class GridService {
     return this.frameworkComponents;
   }
 
-  getColumnPropToColumnInfo(): any {
-    return this.columnPropToColumnInfo;
-  }
-
-  getColumnTitlesToProps(): any {
+  getColumnTitlesToProps(): ColumnTitleToColumnPropMap {
     return this.columnTitlesToProps;
   }
 
-  getDefaultDetails(): any {
+  getColumnPropToColumnInfo(): ColumnPropToColumnInfoMap {
+    return this.columnPropToColumnInfo;
+  }
+
+  getDefaultDetails(): FinancialRowData {
     return {
       name: '',
       numDependants: null,
@@ -218,7 +221,7 @@ export class GridService {
   }
 
   private getPlaceholderRenderer(field: string): any {
-    return (params) => {
+    return (params): string | number => {
       if (params.value) {
         return params.value;
       }

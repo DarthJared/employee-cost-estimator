@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DataGridComponent } from './data-grid.component';
 
 describe('DataGridComponent', () => {

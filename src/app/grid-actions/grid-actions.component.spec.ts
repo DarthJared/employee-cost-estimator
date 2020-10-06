@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GridActionsComponent } from './grid-actions.component';
 
 describe('GridActionsComponent', () => {
