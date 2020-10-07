@@ -28,9 +28,11 @@ export class CalculationService {
       || !percentDependantBenefitsPaidByEmployer
       || !numDependants
       || !name) {
+      /* Return null if any of the required information to calculate the cost is missing */
       return null;
     }
     if (this.startsWithA(name)) {
+      /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
       annualEmployeeBenefitsCost *= 0.9;
       annualDependantBenefitsCost *= 0.9;
     }
@@ -53,9 +55,11 @@ export class CalculationService {
       || !percentEmployeeBenefitsPaidByEmployer
       || !percentDependantBenefitsPaidByEmployer
       || !numDependants) {
+      /* Return null if any of the required information to calculate the cost is missing */
       return null;
     }
     if (this.startsWithA(name)) {
+      /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
       annualEmployeeBenefitsCost *= 0.9;
       annualDependantBenefitsCost *= 0.9;
     }
@@ -66,6 +70,7 @@ export class CalculationService {
   getAnnualCompanyCost(rowData: FinancialRowData[]): number {
     let missingData = false;
     const finalCost: number = rowData.reduce((acc, row) => {
+      /* Get the cost for each row and sum them up */
       const companyCost = this.getAnnualAmountPaidByCompany(
         row.annualSalary,
         row.annualEmployeeBenefitsCost,
@@ -76,6 +81,7 @@ export class CalculationService {
         row.name
       );
       if (!companyCost) {
+        /* If any of the rows are missing data, return null */
         missingData = true;
       }
       return acc + companyCost;

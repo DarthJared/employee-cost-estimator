@@ -50,9 +50,12 @@ export class ExcelService {
   }
 
   getExcelFormatData(template: boolean, currentGridData: FinancialRowData[]): ExcelGridData {
+    /* Tracks the field names for the columns and maintains order */
     const props: ExcelRowData = [];
+    /* Tracks the display names for the columns and maintains order */
     const headerRow: ExcelRowData = [];
     if (template) {
+      /* If they are downloading the Import Template, only give them the column headers */
       for (const columnName of Object.keys(this.gridService.getColumnTitlesToProps())) {
         headerRow.push(columnName);
       }
@@ -65,6 +68,7 @@ export class ExcelService {
     const dataRows: ExcelGridData = [headerRow];
     for (const row of currentGridData) {
       const rowData: ExcelRowData = [];
+      /* For each row, loop over the data and get the column data in the right order */
       for (const columnName of props) {
         rowData.push(row[columnName]);
       }

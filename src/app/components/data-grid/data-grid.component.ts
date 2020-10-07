@@ -20,6 +20,7 @@ export class DataGridComponent {
 
   constructor(private cd: ChangeDetectorRef, private gridService: GridService, private calcService: CalculationService) {
     this.columnDefs = gridService.getColumnDefs();
+    /* Add the click handler for the remove row column */
     this.columnDefs[0].cellRendererParams = {
       clicked: () => {
         this.onCellValueChanged();
@@ -43,13 +44,20 @@ export class DataGridComponent {
     return currentRowData;
   }
 
+  recalculateAnnualCost(currentRows: FinancialRowData[]): void {
+    this.annualCostToCompany = this.calcService.getAnnualCompanyCost(currentRows);
+    /* Ensure that Angular's change detection picks up the update */
+    this.cd.markForCheck();
+  }
+
   onCellValueChanged(): void {
     const currentRows: FinancialRowData[] = this.getCurrentRowData();
     if (currentRows.length > 150) {
+      /* Ensures the grid is using lazy loading if there are more than 150 rows */
       this.domLayout = '';
     }
-    this.annualCostToCompany = this.calcService.getAnnualCompanyCost(currentRows);
-    this.cd.markForCheck();
+    /* Any time a cell is changed, recalculate the total cost to the company */
+    this.recalculateAnnualCost(currentRows);
   }
 
   addEmployee(): void {
@@ -59,9 +67,10 @@ export class DataGridComponent {
     this.annualCostToCompany = null;
   }
 
-  importData(importedData: any): void {
+  importData(importedData: FinancialRowData[]): void {
     this.rowData = importedData;
     this.gridApi.setRowData(this.rowData);
-    this.onCellValueChanged();
+    /* Manually trigger recalculating the total cost*/
+    this.recalculateAnnualCost(importedData);
   }
 }
