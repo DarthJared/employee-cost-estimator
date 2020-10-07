@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import {FinancialRowData} from '../data-typing/financial-row-data';
+import { Injectable } from '@angular/core'
+import { FinancialRowData } from '../data-typing/financial-row-data'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalculationService {
-
-  constructor() { }
+  constructor() {}
 
   private startsWithA(name: string): boolean {
-    return name[0] === 'a' || name[0] === 'A';
+    return name[0] === 'a' || name[0] === 'A'
   }
 
   getAnnualAmountPaidByCompany(
@@ -19,25 +18,34 @@ export class CalculationService {
     percentEmployeeBenefitsPaidByEmployer: number,
     percentDependantBenefitsPaidByEmployer: number,
     numDependants: number,
-    name: string
+    name: string,
   ): number {
-    if (!annualSalary
-      || !annualEmployeeBenefitsCost
-      || !annualDependantBenefitsCost
-      || !percentEmployeeBenefitsPaidByEmployer
-      || !percentDependantBenefitsPaidByEmployer
-      || !numDependants
-      || !name) {
+    if (
+      !annualSalary ||
+      !annualEmployeeBenefitsCost ||
+      !annualDependantBenefitsCost ||
+      !percentEmployeeBenefitsPaidByEmployer ||
+      !percentDependantBenefitsPaidByEmployer ||
+      !numDependants ||
+      !name
+    ) {
       /* Return null if any of the required information to calculate the cost is missing */
-      return null;
+      return null
     }
     if (this.startsWithA(name)) {
       /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-      annualEmployeeBenefitsCost *= 0.9;
-      annualDependantBenefitsCost *= 0.9;
+      annualEmployeeBenefitsCost *= 0.9
+      annualDependantBenefitsCost *= 0.9
     }
-    return (annualSalary + (annualEmployeeBenefitsCost * percentEmployeeBenefitsPaidByEmployer / 100)
-      + (numDependants * annualDependantBenefitsCost * percentDependantBenefitsPaidByEmployer / 100));
+    return (
+      annualSalary +
+      (annualEmployeeBenefitsCost * percentEmployeeBenefitsPaidByEmployer) /
+        100 +
+      (numDependants *
+        annualDependantBenefitsCost *
+        percentDependantBenefitsPaidByEmployer) /
+        100
+    )
   }
 
   getAnnualEmployeeSalaryAfterDeductions(
@@ -47,28 +55,38 @@ export class CalculationService {
     percentEmployeeBenefitsPaidByEmployer: number,
     percentDependantBenefitsPaidByEmployer: number,
     numDependants: number,
-    name: string
+    name: string,
   ): number {
-    if (!annualSalary
-      || !annualEmployeeBenefitsCost
-      || !annualDependantBenefitsCost
-      || !percentEmployeeBenefitsPaidByEmployer
-      || !percentDependantBenefitsPaidByEmployer
-      || !numDependants) {
+    if (
+      !annualSalary ||
+      !annualEmployeeBenefitsCost ||
+      !annualDependantBenefitsCost ||
+      !percentEmployeeBenefitsPaidByEmployer ||
+      !percentDependantBenefitsPaidByEmployer ||
+      !numDependants
+    ) {
       /* Return null if any of the required information to calculate the cost is missing */
-      return null;
+      return null
     }
     if (this.startsWithA(name)) {
       /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-      annualEmployeeBenefitsCost *= 0.9;
-      annualDependantBenefitsCost *= 0.9;
+      annualEmployeeBenefitsCost *= 0.9
+      annualDependantBenefitsCost *= 0.9
     }
-    return (annualSalary - (annualEmployeeBenefitsCost * (100 - percentEmployeeBenefitsPaidByEmployer) / 100)
-      - (numDependants * (annualDependantBenefitsCost * (100 - percentDependantBenefitsPaidByEmployer) / 100)));
+    return (
+      annualSalary -
+      (annualEmployeeBenefitsCost *
+        (100 - percentEmployeeBenefitsPaidByEmployer)) /
+        100 -
+      numDependants *
+        ((annualDependantBenefitsCost *
+          (100 - percentDependantBenefitsPaidByEmployer)) /
+          100)
+    )
   }
 
   getAnnualCompanyCost(rowData: FinancialRowData[]): number {
-    let missingData = false;
+    let missingData = false
     const finalCost: number = rowData.reduce((acc, row) => {
       /* Get the cost for each row and sum them up */
       const companyCost = this.getAnnualAmountPaidByCompany(
@@ -78,17 +96,17 @@ export class CalculationService {
         row.percentEmployeeBenefitsPaidByEmployer,
         row.percentDependantBenefitsPaidByEmployer,
         row.numDependants,
-        row.name
-      );
+        row.name,
+      )
       if (!companyCost) {
         /* If any of the rows are missing data, return null */
-        missingData = true;
+        missingData = true
       }
-      return acc + companyCost;
-    }, 0);
+      return acc + companyCost
+    }, 0)
     if (missingData) {
-      return null;
+      return null
     }
-    return finalCost;
+    return finalCost
   }
 }

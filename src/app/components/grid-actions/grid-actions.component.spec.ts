@@ -1,24 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GridActionsComponent } from './grid-actions.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { GridActionsComponent } from './grid-actions.component'
 
 describe('GridActionsComponent', () => {
-  let component: GridActionsComponent;
-  let fixture: ComponentFixture<GridActionsComponent>;
+  let component: GridActionsComponent
+  let fixture: ComponentFixture<GridActionsComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GridActionsComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [GridActionsComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GridActionsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(GridActionsComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

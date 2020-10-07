@@ -6,9 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prettier": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\""
   },
   "private": true,
+  "prettier": "./prettier-overrides",
   "dependencies": {
     "@angular/animations": "~10.1.4",
     "@angular/cdk": "^10.2.3",
@@ -22,6 +24,8 @@
     "@angular/router": "~10.1.4",
     "ag-grid-angular": "^24.0.0",
     "ag-grid-community": "^24.0.0",
+    "eslint-config-prettier": "~6.11.0",
+    "prettier": "~2.0.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "xlsx": "^0.16.7",

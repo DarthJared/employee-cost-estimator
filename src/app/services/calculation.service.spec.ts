@@ -1,18 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-import { CalculationService } from './calculation.service';
-import {FinancialRowData} from '../data-typing/financial-row-data';
+import { TestBed } from '@angular/core/testing'
+import { CalculationService } from './calculation.service'
+import { FinancialRowData } from '../data-typing/financial-row-data'
 
 describe('CalculationService', () => {
-  let service: CalculationService;
+  let service: CalculationService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(CalculationService);
-  });
+    TestBed.configureTestingModule({})
+    service = TestBed.inject(CalculationService)
+  })
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    expect(service).toBeTruthy()
+  })
 
   it('getAnnualCompanyCost should be the sum of all getAnnualAmountPaidByCompany', () => {
     const MockGridData: FinancialRowData[] = [
@@ -23,7 +23,7 @@ describe('CalculationService', () => {
         annualEmployeeBenefitsCost: 2000,
         annualDependantBenefitsCost: 1000,
         percentEmployeeBenefitsPaidByEmployer: 10,
-        percentDependantBenefitsPaidByEmployer: 5
+        percentDependantBenefitsPaidByEmployer: 5,
       },
       {
         name: 'Ms. Testing',
@@ -32,11 +32,11 @@ describe('CalculationService', () => {
         annualEmployeeBenefitsCost: 2000,
         annualDependantBenefitsCost: 1000,
         percentEmployeeBenefitsPaidByEmployer: 10,
-        percentDependantBenefitsPaidByEmployer: 5
-      }
-    ];
-    let accCost = 0;
-    MockGridData.forEach((rowData) => {
+        percentDependantBenefitsPaidByEmployer: 5,
+      },
+    ]
+    let accCost = 0
+    MockGridData.forEach(rowData => {
       accCost += service.getAnnualAmountPaidByCompany(
         rowData.annualSalary,
         rowData.annualEmployeeBenefitsCost,
@@ -44,12 +44,12 @@ describe('CalculationService', () => {
         rowData.percentEmployeeBenefitsPaidByEmployer,
         rowData.percentDependantBenefitsPaidByEmployer,
         rowData.numDependants,
-        rowData.name
-      );
-    });
-    const annualCost: number = service.getAnnualCompanyCost(MockGridData);
-    expect(accCost).toEqual(annualCost);
-  });
+        rowData.name,
+      )
+    })
+    const annualCost: number = service.getAnnualCompanyCost(MockGridData)
+    expect(accCost).toEqual(annualCost)
+  })
 
   it('getAnnualAmountPaidByCompany should return null if missing data', () => {
     const MockRowWithoutDependants: FinancialRowData = {
@@ -59,8 +59,8 @@ describe('CalculationService', () => {
       annualEmployeeBenefitsCost: 2000,
       annualDependantBenefitsCost: 1000,
       percentEmployeeBenefitsPaidByEmployer: 10,
-      percentDependantBenefitsPaidByEmployer: 5
-    };
+      percentDependantBenefitsPaidByEmployer: 5,
+    }
     const nullRes: number = service.getAnnualAmountPaidByCompany(
       MockRowWithoutDependants.annualSalary,
       MockRowWithoutDependants.annualEmployeeBenefitsCost,
@@ -68,10 +68,10 @@ describe('CalculationService', () => {
       MockRowWithoutDependants.percentEmployeeBenefitsPaidByEmployer,
       MockRowWithoutDependants.percentDependantBenefitsPaidByEmployer,
       MockRowWithoutDependants.numDependants,
-      MockRowWithoutDependants.name
-    );
-    expect(nullRes).toBeNull();
-  });
+      MockRowWithoutDependants.name,
+    )
+    expect(nullRes).toBeNull()
+  })
 
   it('getAnnualEmployeeSalaryAfterDeductions should return null if missing data', () => {
     const MockRowWithoutDependants: FinancialRowData = {
@@ -81,8 +81,8 @@ describe('CalculationService', () => {
       annualEmployeeBenefitsCost: 2000,
       annualDependantBenefitsCost: 1000,
       percentEmployeeBenefitsPaidByEmployer: 10,
-      percentDependantBenefitsPaidByEmployer: 5
-    };
+      percentDependantBenefitsPaidByEmployer: 5,
+    }
     const nullRes: number = service.getAnnualEmployeeSalaryAfterDeductions(
       MockRowWithoutDependants.annualSalary,
       MockRowWithoutDependants.annualEmployeeBenefitsCost,
@@ -90,10 +90,10 @@ describe('CalculationService', () => {
       MockRowWithoutDependants.percentEmployeeBenefitsPaidByEmployer,
       MockRowWithoutDependants.percentDependantBenefitsPaidByEmployer,
       MockRowWithoutDependants.numDependants,
-      MockRowWithoutDependants.name
-    );
-    expect(nullRes).toBeNull();
-  });
+      MockRowWithoutDependants.name,
+    )
+    expect(nullRes).toBeNull()
+  })
 
   it('getAnnualCompanyCost should return null if missing data', () => {
     const MockRowsMissingData: FinancialRowData[] = [
@@ -104,7 +104,7 @@ describe('CalculationService', () => {
         annualEmployeeBenefitsCost: 2000,
         annualDependantBenefitsCost: 1000,
         percentEmployeeBenefitsPaidByEmployer: 10,
-        percentDependantBenefitsPaidByEmployer: 5
+        percentDependantBenefitsPaidByEmployer: 5,
       },
       {
         name: 'Ms. Testing',
@@ -113,12 +113,12 @@ describe('CalculationService', () => {
         annualEmployeeBenefitsCost: 2000,
         annualDependantBenefitsCost: 1000,
         percentEmployeeBenefitsPaidByEmployer: 10,
-        percentDependantBenefitsPaidByEmployer: 5
-      }
-    ];
-    const nullRes: number = service.getAnnualCompanyCost(MockRowsMissingData);
-    expect(nullRes).toBeNull();
-  });
+        percentDependantBenefitsPaidByEmployer: 5,
+      },
+    ]
+    const nullRes: number = service.getAnnualCompanyCost(MockRowsMissingData)
+    expect(nullRes).toBeNull()
+  })
 
   it('should give 10% discount on benefits if name starts with "A"', () => {
     const rowNameStartsWithA: FinancialRowData = {
@@ -128,8 +128,8 @@ describe('CalculationService', () => {
       annualEmployeeBenefitsCost: 2000,
       annualDependantBenefitsCost: 1000,
       percentEmployeeBenefitsPaidByEmployer: 10,
-      percentDependantBenefitsPaidByEmployer: 5
-    };
+      percentDependantBenefitsPaidByEmployer: 5,
+    }
     const rowNameDoesntStartWithA: FinancialRowData = {
       name: 'Mr. Tester',
       numDependants: 1,
@@ -137,8 +137,8 @@ describe('CalculationService', () => {
       annualEmployeeBenefitsCost: 2000,
       annualDependantBenefitsCost: 1000,
       percentEmployeeBenefitsPaidByEmployer: 10,
-      percentDependantBenefitsPaidByEmployer: 5
-    };
+      percentDependantBenefitsPaidByEmployer: 5,
+    }
     const paidByCompanyDiscounted: number = service.getAnnualAmountPaidByCompany(
       rowNameStartsWithA.annualSalary,
       rowNameStartsWithA.annualEmployeeBenefitsCost,
@@ -146,8 +146,8 @@ describe('CalculationService', () => {
       rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer,
       rowNameStartsWithA.percentDependantBenefitsPaidByEmployer,
       rowNameStartsWithA.numDependants,
-      rowNameStartsWithA.name
-    );
+      rowNameStartsWithA.name,
+    )
     const paidByCompanyNormal: number = service.getAnnualAmountPaidByCompany(
       rowNameDoesntStartWithA.annualSalary,
       rowNameDoesntStartWithA.annualEmployeeBenefitsCost,
@@ -155,8 +155,8 @@ describe('CalculationService', () => {
       rowNameDoesntStartWithA.percentEmployeeBenefitsPaidByEmployer,
       rowNameDoesntStartWithA.percentDependantBenefitsPaidByEmployer,
       rowNameDoesntStartWithA.numDependants,
-      rowNameDoesntStartWithA.name
-    );
+      rowNameDoesntStartWithA.name,
+    )
 
     const employeeSalaryDiscounted: number = service.getAnnualEmployeeSalaryAfterDeductions(
       rowNameStartsWithA.annualSalary,
@@ -165,8 +165,8 @@ describe('CalculationService', () => {
       rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer,
       rowNameStartsWithA.percentDependantBenefitsPaidByEmployer,
       rowNameStartsWithA.numDependants,
-      rowNameStartsWithA.name
-    );
+      rowNameStartsWithA.name,
+    )
     const employeeSalaryNormal: number = service.getAnnualEmployeeSalaryAfterDeductions(
       rowNameDoesntStartWithA.annualSalary,
       rowNameDoesntStartWithA.annualEmployeeBenefitsCost,
@@ -174,19 +174,29 @@ describe('CalculationService', () => {
       rowNameDoesntStartWithA.percentEmployeeBenefitsPaidByEmployer,
       rowNameDoesntStartWithA.percentDependantBenefitsPaidByEmployer,
       rowNameDoesntStartWithA.numDependants,
-      rowNameDoesntStartWithA.name
-    );
+      rowNameDoesntStartWithA.name,
+    )
 
-    expect(paidByCompanyNormal - (0.1 *
-      ((rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer * rowNameStartsWithA.annualEmployeeBenefitsCost) +
-      (rowNameStartsWithA.percentDependantBenefitsPaidByEmployer * rowNameStartsWithA.numDependants
-        * rowNameStartsWithA.annualDependantBenefitsCost)) / 100))
-      .toEqual(paidByCompanyDiscounted);
+    expect(
+      paidByCompanyNormal -
+        (0.1 *
+          (rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer *
+            rowNameStartsWithA.annualEmployeeBenefitsCost +
+            rowNameStartsWithA.percentDependantBenefitsPaidByEmployer *
+              rowNameStartsWithA.numDependants *
+              rowNameStartsWithA.annualDependantBenefitsCost)) /
+          100,
+    ).toEqual(paidByCompanyDiscounted)
 
-    expect(employeeSalaryNormal +
-      (0.1 * (((100 - rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer) * rowNameStartsWithA.annualEmployeeBenefitsCost) +
-      ((100 - rowNameStartsWithA.percentDependantBenefitsPaidByEmployer) * rowNameStartsWithA.numDependants
-        * rowNameStartsWithA.annualDependantBenefitsCost)) / 100))
-      .toEqual(employeeSalaryDiscounted);
-  });
-});
+    expect(
+      employeeSalaryNormal +
+        (0.1 *
+          ((100 - rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer) *
+            rowNameStartsWithA.annualEmployeeBenefitsCost +
+            (100 - rowNameStartsWithA.percentDependantBenefitsPaidByEmployer) *
+              rowNameStartsWithA.numDependants *
+              rowNameStartsWithA.annualDependantBenefitsCost)) /
+          100,
+    ).toEqual(employeeSalaryDiscounted)
+  })
+})

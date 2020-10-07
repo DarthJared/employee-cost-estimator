@@ -1,3 +1,3 @@
-export type ExcelRowData = Array<string | number>;
+export type ExcelRowData = Array<string | number>
 
-export type ExcelGridData = Array<ExcelRowData>;
+export type ExcelGridData = Array<ExcelRowData>

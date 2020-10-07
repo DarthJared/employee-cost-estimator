@@ -1,27 +1,27 @@
-import {Component} from '@angular/core';
-import {ICellRendererAngularComp} from 'ag-grid-angular';
+import { Component } from '@angular/core'
+import { ICellRendererAngularComp } from 'ag-grid-angular'
 
 @Component({
   selector: 'app-remove-cell',
   templateUrl: './remove-cell.component.html',
-  styleUrls: ['./remove-cell.component.scss']
+  styleUrls: ['./remove-cell.component.scss'],
 })
 export class RemoveCellComponent implements ICellRendererAngularComp {
-  private params: any;
+  private params: any
 
-  constructor() { }
+  constructor() {}
 
   agInit(params: any): void {
-    this.params = params;
+    this.params = params
   }
 
   /* Method required by the ICellRendererAngularComp interface */
   refresh(params: any): boolean {
-    return false;
+    return false
   }
 
   removeRow(): void {
-    this.params.node.gridApi.updateRowData({ remove: [this.params.node.data] });
-    this.params.clicked();
+    this.params.node.gridApi.updateRowData({ remove: [this.params.node.data] })
+    this.params.clicked()
   }
 }

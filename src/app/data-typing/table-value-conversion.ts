@@ -1,10 +1,10 @@
 export interface ColumnTitleToColumnPropMap {
-  [key: string]: string;
+  [key: string]: string
 }
 
 export interface ColumnPropToColumnInfoMap {
   [key: string]: {
-    title: string;
-    width: number;
-  };
+    title: string
+    width: number
+  }
 }
