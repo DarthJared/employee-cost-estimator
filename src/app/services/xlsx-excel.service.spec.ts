@@ -1,14 +1,17 @@
 import { TestBed } from '@angular/core/testing'
-import { ExcelService } from './excel.service'
+import { XlsxExcelService } from './xlsx-excel.service'
 import { FinancialRowData } from '../data-typing/financial-row-data'
 import { ExcelGridData } from '../data-typing/excel-data'
+import { SimpleGridService } from './simple-grid.service'
 
-describe('ExcelService', () => {
-  let service: ExcelService
+describe('XlsxExcelService', () => {
+  let service: XlsxExcelService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
-    service = TestBed.inject(ExcelService)
+    TestBed.configureTestingModule({
+      providers: [{ provide: 'GridService', useClass: SimpleGridService }],
+    })
+    service = TestBed.inject(XlsxExcelService)
   })
 
   it('should be created', () => {

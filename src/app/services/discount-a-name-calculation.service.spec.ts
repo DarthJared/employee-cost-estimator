@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
-import { CalculationService } from './calculation.service'
+import { DiscountANameCalculationService } from './discount-a-name-calculation.service'
 import { FinancialRowData } from '../data-typing/financial-row-data'
 
-describe('CalculationService', () => {
-  let service: CalculationService
+describe('DiscountANameCalculationService', () => {
+  let service: DiscountANameCalculationService
 
   beforeEach(() => {
     TestBed.configureTestingModule({})
-    service = TestBed.inject(CalculationService)
+    service = TestBed.inject(DiscountANameCalculationService)
   })
 
   it('should be created', () => {

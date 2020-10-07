@@ -1,18 +1,26 @@
 import { TestBed } from '@angular/core/testing'
-import { GridService } from './grid.service'
+import { SimpleGridService } from './simple-grid.service'
 import {
   ColDef,
   ValueFormatterParams,
   ValueGetterParams,
   ValueParserParams,
 } from 'ag-grid-community'
+import { DiscountANameCalculationService } from './discount-a-name-calculation.service'
 
-describe('GridService', () => {
-  let service: GridService
+describe('SimpleGridService', () => {
+  let service: SimpleGridService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
-    service = TestBed.inject(GridService)
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: 'CalculationService',
+          useClass: DiscountANameCalculationService,
+        },
+      ],
+    })
+    service = TestBed.inject(SimpleGridService)
   })
 
   it('should be created', () => {

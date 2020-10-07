@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon'
 import { DataGridComponent } from './components/data-grid/data-grid.component'
 import { RemoveCellComponent } from './components/remove-cell/remove-cell.component'
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component'
+import { XlsxExcelService } from './services/xlsx-excel.service'
+import { SimpleGridService } from './services/simple-grid.service'
+import { DiscountANameCalculationService } from './services/discount-a-name-calculation.service'
 
 @NgModule({
   declarations: [
@@ -30,7 +33,14 @@ import { GridActionsComponent } from './components/grid-actions/grid-actions.com
     MatIconModule,
     AgGridModule.withComponents([RemoveCellComponent]),
   ],
-  providers: [],
+  providers: [
+    { provide: 'ExcelService', useClass: XlsxExcelService },
+    { provide: 'GridService', useClass: SimpleGridService },
+    {
+      provide: 'CalculationService',
+      useClass: DiscountANameCalculationService,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

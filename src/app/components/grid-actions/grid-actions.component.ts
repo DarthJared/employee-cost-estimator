@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { GridService } from '../../services/grid.service'
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core'
 import { ExcelService } from '../../services/excel.service'
+import { GridService } from '../../services/grid.service'
 
 @Component({
   selector: 'app-grid-actions',
@@ -13,8 +13,8 @@ export class GridActionsComponent {
   @Input() currentGridData
 
   constructor(
-    private gridService: GridService,
-    private excelService: ExcelService,
+    @Inject('GridService') private gridService: GridService,
+    @Inject('ExcelService') private excelService: ExcelService,
   ) {}
 
   addEmployee(): void {

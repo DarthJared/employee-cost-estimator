@@ -2,11 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
 } from '@angular/core'
-import { GridService } from '../../services/grid.service'
-import { CalculationService } from '../../services/calculation.service'
+import { SimpleGridService } from '../../services/simple-grid.service'
+import { DiscountANameCalculationService } from '../../services/discount-a-name-calculation.service'
 import { ColDef, GridApi } from 'ag-grid-community'
 import { FinancialRowData } from '../../data-typing/financial-row-data'
+import { GridService } from '../../services/grid.service'
+import { CalculationService } from '../../services/calculation.service'
 
 @Component({
   selector: 'app-data-grid',
@@ -24,8 +27,8 @@ export class DataGridComponent {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private gridService: GridService,
-    private calcService: CalculationService,
+    @Inject('GridService') private gridService: GridService,
+    @Inject('CalculationService') private calcService: CalculationService,
   ) {
     this.columnDefs = gridService.getColumnDefs()
     /* Add the click handler for the remove row column */

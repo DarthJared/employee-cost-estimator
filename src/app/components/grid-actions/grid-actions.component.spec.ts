@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { GridActionsComponent } from './grid-actions.component'
+import { XlsxExcelService } from '../../services/xlsx-excel.service'
+import { SimpleGridService } from '../../services/simple-grid.service'
 
 describe('GridActionsComponent', () => {
   let component: GridActionsComponent
@@ -8,6 +10,10 @@ describe('GridActionsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GridActionsComponent],
+      providers: [
+        { provide: 'GridService', useClass: SimpleGridService },
+        { provide: 'ExcelService', useClass: XlsxExcelService },
+      ],
     }).compileComponents()
   })
 
