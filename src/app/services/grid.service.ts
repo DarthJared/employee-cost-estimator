@@ -145,6 +145,7 @@ export class GridService {
     removeCellComponent: RemoveCellComponent
   };
 
+  /* A map of the column titles to the field names */
   private columnTitlesToProps: ColumnTitleToColumnPropMap = {
     Name: 'name',
     'Number of Dependants': 'numDependants',
@@ -155,6 +156,7 @@ export class GridService {
     '% Dependant Benefits Paid By Employer': 'percentDependantBenefitsPaidByEmployer'
   };
 
+  /* A map of the field names to the column titles and the width of each column in excel */
   private columnPropToColumnInfo: ColumnPropToColumnInfoMap = {
     name: {
       title: 'Name',
@@ -217,6 +219,7 @@ export class GridService {
   }
 
   private numberValueParser(params): number {
+    /* Ensures that inputs to the table always return as numbers */
     return Number(params.newValue);
   }
 
