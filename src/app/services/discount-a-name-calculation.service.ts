@@ -12,76 +12,60 @@ export class DiscountANameCalculationService implements CalculationService {
     return name[0] === 'a' || name[0] === 'A'
   }
 
-  getAnnualAmountPaidByCompany(
-    annualSalary: number,
-    annualEmployeeBenefitsCost: number,
-    annualDependantBenefitsCost: number,
-    percentEmployeeBenefitsPaidByEmployer: number,
-    percentDependantBenefitsPaidByEmployer: number,
-    numDependants: number,
-    name: string,
-  ): number {
+  getAnnualAmountPaidByCompany(rowData: FinancialRowData): number {
     if (
-      !annualSalary ||
-      !annualEmployeeBenefitsCost ||
-      !annualDependantBenefitsCost ||
-      !percentEmployeeBenefitsPaidByEmployer ||
-      !percentDependantBenefitsPaidByEmployer ||
-      !numDependants ||
-      !name
+      !rowData.annualSalary ||
+      !rowData.annualEmployeeBenefitsCost ||
+      !rowData.annualDependantBenefitsCost ||
+      !rowData.percentEmployeeBenefitsPaidByEmployer ||
+      !rowData.percentDependantBenefitsPaidByEmployer ||
+      !rowData.numDependants ||
+      !rowData.name
     ) {
       /* Return null if any of the required information to calculate the cost is missing */
       return null
     }
     if (this.startsWithA(name)) {
       /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-      annualEmployeeBenefitsCost *= 0.9
-      annualDependantBenefitsCost *= 0.9
+      rowData.annualEmployeeBenefitsCost *= 0.9
+      rowData.annualDependantBenefitsCost *= 0.9
     }
     return (
-      annualSalary +
-      (annualEmployeeBenefitsCost * percentEmployeeBenefitsPaidByEmployer) /
+      rowData.annualSalary +
+      (rowData.annualEmployeeBenefitsCost * rowData.percentEmployeeBenefitsPaidByEmployer) /
         100 +
-      (numDependants *
-        annualDependantBenefitsCost *
-        percentDependantBenefitsPaidByEmployer) /
+      (rowData.numDependants *
+        rowData.annualDependantBenefitsCost *
+        rowData.percentDependantBenefitsPaidByEmployer) /
         100
     )
   }
 
-  getAnnualEmployeeSalaryAfterDeductions(
-    annualSalary: number,
-    annualEmployeeBenefitsCost: number,
-    annualDependantBenefitsCost: number,
-    percentEmployeeBenefitsPaidByEmployer: number,
-    percentDependantBenefitsPaidByEmployer: number,
-    numDependants: number,
-    name: string,
-  ): number {
+  getAnnualEmployeeSalaryAfterDeductions(rowData: FinancialRowData): number {
     if (
-      !annualSalary ||
-      !annualEmployeeBenefitsCost ||
-      !annualDependantBenefitsCost ||
-      !percentEmployeeBenefitsPaidByEmployer ||
-      !percentDependantBenefitsPaidByEmployer ||
-      !numDependants
+      !rowData.annualSalary ||
+      !rowData.annualEmployeeBenefitsCost ||
+      !rowData.annualDependantBenefitsCost ||
+      !rowData.percentEmployeeBenefitsPaidByEmployer ||
+      !rowData.percentDependantBenefitsPaidByEmployer ||
+      !rowData.numDependants
     ) {
       /* Return null if any of the required information to calculate the cost is missing */
       return null
     }
     if (this.startsWithA(name)) {
       /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-      annualEmployeeBenefitsCost *= 0.9
-      annualDependantBenefitsCost *= 0.9
+      rowData.annualEmployeeBenefitsCost *= 0.9
+      rowData.annualDependantBenefitsCost *= 0.9
     }
     return (
-      annualSalary -
-      (annualEmployeeBenefitsCost *
-        (100 - percentEmployeeBenefitsPaidByEmployer)) /
+      rowData.annualSalary -
+      (rowData.annualEmployeeBenefitsCost *
+        (100 - rowData.percentEmployeeBenefitsPaidByEmployer)) /
         100 -
-      numDependants *
-        ((annualDependantBenefitsCost *
-          (100 - percentDependantBenefitsPaidByEmployer)) /
+      rowData.numDependants *
+        ((rowData.annualDependantBenefitsCost *
+          (100 - rowData.percentDependantBenefitsPaidByEmployer)) /
           100)
     )
   }
@@ -90,15 +74,7 @@ export class DiscountANameCalculationService implements CalculationService {
     let missingData = false
     const finalCost: number = rowData.reduce((acc, row) => {
       /* Get the cost for each row and sum them up */
-      const companyCost = this.getAnnualAmountPaidByCompany(
-        row.annualSalary,
-        row.annualEmployeeBenefitsCost,
-        row.annualDependantBenefitsCost,
-        row.percentEmployeeBenefitsPaidByEmployer,
-        row.percentDependantBenefitsPaidByEmployer,
-        row.numDependants,
-        row.name,
-      )
+      const companyCost = this.getAnnualAmountPaidByCompany(row)
       if (!companyCost) {
         /* If any of the rows are missing data, return null */
         missingData = true

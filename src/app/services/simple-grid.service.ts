@@ -78,15 +78,7 @@ export class SimpleGridService implements GridService {
       width: 200,
       valueGetter: params => {
         return (
-          this.calcService.getAnnualAmountPaidByCompany(
-            params.data.annualSalary,
-            params.data.annualEmployeeBenefitsCost,
-            params.data.annualDependantBenefitsCost,
-            params.data.percentEmployeeBenefitsPaidByEmployer,
-            params.data.percentDependantBenefitsPaidByEmployer,
-            params.data.numDependants,
-            params.data.name,
-          ) / 26
+          this.calcService.getAnnualAmountPaidByCompany(params.data) / 26
         )
       },
       valueFormatter: this.dollarAmountDisplay,
@@ -96,15 +88,7 @@ export class SimpleGridService implements GridService {
       width: 270,
       valueGetter: params => {
         return (
-          this.calcService.getAnnualEmployeeSalaryAfterDeductions(
-            params.data.annualSalary,
-            params.data.annualEmployeeBenefitsCost,
-            params.data.annualDependantBenefitsCost,
-            params.data.percentEmployeeBenefitsPaidByEmployer,
-            params.data.percentDependantBenefitsPaidByEmployer,
-            params.data.numDependants,
-            params.data.name,
-          ) / 26
+          this.calcService.getAnnualEmployeeSalaryAfterDeductions(params.data) / 26
         )
       },
       valueFormatter: this.dollarAmountDisplay,
@@ -114,15 +98,7 @@ export class SimpleGridService implements GridService {
       pinned: 'right',
       width: 180,
       valueGetter: params => {
-        return this.calcService.getAnnualAmountPaidByCompany(
-          params.data.annualSalary,
-          params.data.annualEmployeeBenefitsCost,
-          params.data.annualDependantBenefitsCost,
-          params.data.percentEmployeeBenefitsPaidByEmployer,
-          params.data.percentDependantBenefitsPaidByEmployer,
-          params.data.numDependants,
-          params.data.name,
-        )
+        return this.calcService.getAnnualAmountPaidByCompany(params.data)
       },
       valueFormatter: this.dollarAmountDisplay,
     },
@@ -131,15 +107,7 @@ export class SimpleGridService implements GridService {
       pinned: 'right',
       width: 250,
       valueGetter: params => {
-        return this.calcService.getAnnualEmployeeSalaryAfterDeductions(
-          params.data.annualSalary,
-          params.data.annualEmployeeBenefitsCost,
-          params.data.annualDependantBenefitsCost,
-          params.data.percentEmployeeBenefitsPaidByEmployer,
-          params.data.percentDependantBenefitsPaidByEmployer,
-          params.data.numDependants,
-          params.data.name,
-        )
+        return this.calcService.getAnnualEmployeeSalaryAfterDeductions(params.data)
       },
       valueFormatter: this.dollarAmountDisplay,
     },

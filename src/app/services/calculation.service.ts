@@ -1,25 +1,9 @@
 import { FinancialRowData } from '../data-typing/financial-row-data'
 
 export interface CalculationService {
-  getAnnualAmountPaidByCompany(
-    annualSalary: number,
-    annualEmployeeBenefitsCost: number,
-    annualDependantBenefitsCost: number,
-    percentEmployeeBenefitsPaidByEmployer: number,
-    percentDependantBenefitsPaidByEmployer: number,
-    numDependants: number,
-    name: string,
-  ): number
+  getAnnualAmountPaidByCompany(rowData: FinancialRowData): number
 
-  getAnnualEmployeeSalaryAfterDeductions(
-    annualSalary: number,
-    annualEmployeeBenefitsCost: number,
-    annualDependantBenefitsCost: number,
-    percentEmployeeBenefitsPaidByEmployer: number,
-    percentDependantBenefitsPaidByEmployer: number,
-    numDependants: number,
-    name: string,
-  ): number
+  getAnnualEmployeeSalaryAfterDeductions(rowData: FinancialRowData): number
 
   getAnnualCompanyCost(rowData: FinancialRowData[]): number
 }

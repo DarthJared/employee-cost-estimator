@@ -37,15 +37,7 @@ describe('DiscountANameCalculationService', () => {
     ]
     let accCost = 0
     MockGridData.forEach(rowData => {
-      accCost += service.getAnnualAmountPaidByCompany(
-        rowData.annualSalary,
-        rowData.annualEmployeeBenefitsCost,
-        rowData.annualDependantBenefitsCost,
-        rowData.percentEmployeeBenefitsPaidByEmployer,
-        rowData.percentDependantBenefitsPaidByEmployer,
-        rowData.numDependants,
-        rowData.name,
-      )
+      accCost += service.getAnnualAmountPaidByCompany(rowData)
     })
     const annualCost: number = service.getAnnualCompanyCost(MockGridData)
     expect(accCost).toEqual(annualCost)
@@ -61,15 +53,7 @@ describe('DiscountANameCalculationService', () => {
       percentEmployeeBenefitsPaidByEmployer: 10,
       percentDependantBenefitsPaidByEmployer: 5,
     }
-    const nullRes: number = service.getAnnualAmountPaidByCompany(
-      MockRowWithoutDependants.annualSalary,
-      MockRowWithoutDependants.annualEmployeeBenefitsCost,
-      MockRowWithoutDependants.annualDependantBenefitsCost,
-      MockRowWithoutDependants.percentEmployeeBenefitsPaidByEmployer,
-      MockRowWithoutDependants.percentDependantBenefitsPaidByEmployer,
-      MockRowWithoutDependants.numDependants,
-      MockRowWithoutDependants.name,
-    )
+    const nullRes: number = service.getAnnualAmountPaidByCompany(MockRowWithoutDependants)
     expect(nullRes).toBeNull()
   })
 
@@ -83,15 +67,7 @@ describe('DiscountANameCalculationService', () => {
       percentEmployeeBenefitsPaidByEmployer: 10,
       percentDependantBenefitsPaidByEmployer: 5,
     }
-    const nullRes: number = service.getAnnualEmployeeSalaryAfterDeductions(
-      MockRowWithoutDependants.annualSalary,
-      MockRowWithoutDependants.annualEmployeeBenefitsCost,
-      MockRowWithoutDependants.annualDependantBenefitsCost,
-      MockRowWithoutDependants.percentEmployeeBenefitsPaidByEmployer,
-      MockRowWithoutDependants.percentDependantBenefitsPaidByEmployer,
-      MockRowWithoutDependants.numDependants,
-      MockRowWithoutDependants.name,
-    )
+    const nullRes: number = service.getAnnualEmployeeSalaryAfterDeductions(MockRowWithoutDependants)
     expect(nullRes).toBeNull()
   })
 
@@ -139,43 +115,11 @@ describe('DiscountANameCalculationService', () => {
       percentEmployeeBenefitsPaidByEmployer: 10,
       percentDependantBenefitsPaidByEmployer: 5,
     }
-    const paidByCompanyDiscounted: number = service.getAnnualAmountPaidByCompany(
-      rowNameStartsWithA.annualSalary,
-      rowNameStartsWithA.annualEmployeeBenefitsCost,
-      rowNameStartsWithA.annualDependantBenefitsCost,
-      rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer,
-      rowNameStartsWithA.percentDependantBenefitsPaidByEmployer,
-      rowNameStartsWithA.numDependants,
-      rowNameStartsWithA.name,
-    )
-    const paidByCompanyNormal: number = service.getAnnualAmountPaidByCompany(
-      rowNameDoesntStartWithA.annualSalary,
-      rowNameDoesntStartWithA.annualEmployeeBenefitsCost,
-      rowNameDoesntStartWithA.annualDependantBenefitsCost,
-      rowNameDoesntStartWithA.percentEmployeeBenefitsPaidByEmployer,
-      rowNameDoesntStartWithA.percentDependantBenefitsPaidByEmployer,
-      rowNameDoesntStartWithA.numDependants,
-      rowNameDoesntStartWithA.name,
-    )
+    const paidByCompanyDiscounted: number = service.getAnnualAmountPaidByCompany(rowNameStartsWithA)
+    const paidByCompanyNormal: number = service.getAnnualAmountPaidByCompany(rowNameDoesntStartWithA)
 
-    const employeeSalaryDiscounted: number = service.getAnnualEmployeeSalaryAfterDeductions(
-      rowNameStartsWithA.annualSalary,
-      rowNameStartsWithA.annualEmployeeBenefitsCost,
-      rowNameStartsWithA.annualDependantBenefitsCost,
-      rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer,
-      rowNameStartsWithA.percentDependantBenefitsPaidByEmployer,
-      rowNameStartsWithA.numDependants,
-      rowNameStartsWithA.name,
-    )
-    const employeeSalaryNormal: number = service.getAnnualEmployeeSalaryAfterDeductions(
-      rowNameDoesntStartWithA.annualSalary,
-      rowNameDoesntStartWithA.annualEmployeeBenefitsCost,
-      rowNameDoesntStartWithA.annualDependantBenefitsCost,
-      rowNameDoesntStartWithA.percentEmployeeBenefitsPaidByEmployer,
-      rowNameDoesntStartWithA.percentDependantBenefitsPaidByEmployer,
-      rowNameDoesntStartWithA.numDependants,
-      rowNameDoesntStartWithA.name,
-    )
+    const employeeSalaryDiscounted: number = service.getAnnualEmployeeSalaryAfterDeductions(rowNameStartsWithA)
+    const employeeSalaryNormal: number = service.getAnnualEmployeeSalaryAfterDeductions(rowNameDoesntStartWithA)
 
     expect(
       paidByCompanyNormal -
