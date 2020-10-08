@@ -27,19 +27,19 @@ export class DiscountANameCalculationService implements CalculationService {
     }
 
     /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-    const annualEmployeeBenefitsCost: number = this.startsWithA(rowData.name) ?
-      0.9 * rowData.annualEmployeeBenefitsCost
-      : rowData.annualEmployeeBenefitsCost;
-    const annualDependantBenefitsCost: number = this.startsWithA(rowData.name) ?
-      0.9 * rowData.annualDependantBenefitsCost
-      : rowData.annualDependantBenefitsCost;
+    const annualEmployeeBenefitsCost: number = this.startsWithA(rowData.name)
+      ? 0.9 * rowData.annualEmployeeBenefitsCost
+      : rowData.annualEmployeeBenefitsCost
+    const annualDependantBenefitsCost: number = this.startsWithA(rowData.name)
+      ? 0.9 * rowData.annualDependantBenefitsCost
+      : rowData.annualDependantBenefitsCost
 
     return (
       rowData.annualSalary +
       (annualEmployeeBenefitsCost *
         rowData.percentEmployeeBenefitsPaidByEmployer +
         rowData.numDependants *
-        annualDependantBenefitsCost *
+          annualDependantBenefitsCost *
           rowData.percentDependantBenefitsPaidByEmployer) /
         100
     )
@@ -60,19 +60,19 @@ export class DiscountANameCalculationService implements CalculationService {
     }
 
     /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-    const annualEmployeeBenefitsCost: number = this.startsWithA(rowData.name) ?
-      0.9 * rowData.annualEmployeeBenefitsCost
-      : rowData.annualEmployeeBenefitsCost;
-    const annualDependantBenefitsCost: number = this.startsWithA(rowData.name) ?
-      0.9 * rowData.annualDependantBenefitsCost
-      : rowData.annualDependantBenefitsCost;
+    const annualEmployeeBenefitsCost: number = this.startsWithA(rowData.name)
+      ? 0.9 * rowData.annualEmployeeBenefitsCost
+      : rowData.annualEmployeeBenefitsCost
+    const annualDependantBenefitsCost: number = this.startsWithA(rowData.name)
+      ? 0.9 * rowData.annualDependantBenefitsCost
+      : rowData.annualDependantBenefitsCost
 
     return (
       rowData.annualSalary -
       (annualEmployeeBenefitsCost *
         (100 - rowData.percentEmployeeBenefitsPaidByEmployer) +
         rowData.numDependants *
-        annualDependantBenefitsCost *
+          annualDependantBenefitsCost *
           (100 - rowData.percentDependantBenefitsPaidByEmployer)) /
         100
     )
