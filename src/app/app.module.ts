@@ -35,7 +35,8 @@ import { DiscountANameCalculationService } from './services/discount-a-name-calc
   ],
   providers: [
     { provide: 'ExcelService', useClass: XlsxExcelService },
-    { provide: 'GridService', useClass: SimpleGridService },
+    { provide: 'ColumnDetailsService', useClass: SimpleGridService },
+    { provide: 'DefaultDetailsService', useClass: SimpleGridService },
     {
       provide: 'CalculationService',
       useClass: DiscountANameCalculationService,

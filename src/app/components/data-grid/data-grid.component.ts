@@ -4,12 +4,13 @@ import {
   Component,
   Inject,
 } from '@angular/core'
-import { SimpleGridService } from '../../services/simple-grid.service'
-import { DiscountANameCalculationService } from '../../services/discount-a-name-calculation.service'
 import { ColDef, GridApi } from 'ag-grid-community'
 import { FinancialRowData } from '../../data-typing/financial-row-data'
-import { GridService } from '../../services/grid.service'
 import { CalculationService } from '../../services/calculation.service'
+import {
+  ColumnDetailsService,
+  DefaultDetailsService,
+} from '../../services/grid.service'
 
 @Component({
   selector: 'app-data-grid',
@@ -23,21 +24,24 @@ export class DataGridComponent {
   gridApi: GridApi
   frameworkComponents
   columnDefs: ColDef[]
-  rowData: FinancialRowData[] = [this.gridService.getDefaultDetails()]
+  rowData: FinancialRowData[] = [this.defaultDetailsService.getDefaultDetails()]
 
   constructor(
     private cd: ChangeDetectorRef,
-    @Inject('GridService') private gridService: GridService,
+    @Inject('ColumnDetailsService')
+    private columnDetailsService: ColumnDetailsService,
+    @Inject('DefaultDetailsService')
+    private defaultDetailsService: DefaultDetailsService,
     @Inject('CalculationService') private calcService: CalculationService,
   ) {
-    this.columnDefs = gridService.getColumnDefs()
+    this.columnDefs = columnDetailsService.getColumnDefs()
     /* Add the click handler for the remove row column */
     this.columnDefs[0].cellRendererParams = {
       clicked: () => {
         this.onCellValueChanged()
       },
     }
-    this.frameworkComponents = this.gridService.getFrameworkComponents()
+    this.frameworkComponents = this.columnDetailsService.getFrameworkComponents()
   }
 
   onGridReady(params): void {
@@ -75,7 +79,7 @@ export class DataGridComponent {
 
   addEmployee(): void {
     const updatedRowData: FinancialRowData[] = this.getCurrentRowData()
-    updatedRowData.push(this.gridService.getDefaultDetails())
+    updatedRowData.push(this.defaultDetailsService.getDefaultDetails())
     this.rowData = updatedRowData
     this.annualCostToCompany = null
   }

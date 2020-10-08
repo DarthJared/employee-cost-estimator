@@ -6,13 +6,14 @@ import {
   ColumnPropToColumnInfoMap,
   ColumnTitleToColumnPropMap,
 } from '../data-typing/table-value-conversion'
-import { GridService } from './grid.service'
+import { ColumnDetailsService, DefaultDetailsService } from './grid.service'
 import { CalculationService } from './calculation.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class SimpleGridService implements GridService {
+export class SimpleGridService
+  implements ColumnDetailsService, DefaultDetailsService {
   private dollarAmountDisplay = (params): string => {
     if (!params.value) {
       return '--'
@@ -77,9 +78,7 @@ export class SimpleGridService implements GridService {
       headerName: 'Bi-Weekly Company Cost',
       width: 200,
       valueGetter: params => {
-        return (
-          this.calcService.getAnnualAmountPaidByCompany(params.data) / 26
-        )
+        return this.calcService.getAnnualAmountPaidByCompany(params.data) / 26
       },
       valueFormatter: this.dollarAmountDisplay,
     },
@@ -88,7 +87,8 @@ export class SimpleGridService implements GridService {
       width: 270,
       valueGetter: params => {
         return (
-          this.calcService.getAnnualEmployeeSalaryAfterDeductions(params.data) / 26
+          this.calcService.getAnnualEmployeeSalaryAfterDeductions(params.data) /
+          26
         )
       },
       valueFormatter: this.dollarAmountDisplay,
@@ -107,7 +107,9 @@ export class SimpleGridService implements GridService {
       pinned: 'right',
       width: 250,
       valueGetter: params => {
-        return this.calcService.getAnnualEmployeeSalaryAfterDeductions(params.data)
+        return this.calcService.getAnnualEmployeeSalaryAfterDeductions(
+          params.data,
+        )
       },
       valueFormatter: this.dollarAmountDisplay,
     },

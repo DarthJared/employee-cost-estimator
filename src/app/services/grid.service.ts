@@ -5,7 +5,7 @@ import {
 } from '../data-typing/table-value-conversion'
 import { FinancialRowData } from '../data-typing/financial-row-data'
 
-export interface GridService {
+export interface ColumnDetailsService {
   getColumnDefs(): ColDef[]
 
   getFrameworkComponents(): any
@@ -13,6 +13,8 @@ export interface GridService {
   getColumnTitlesToProps(): ColumnTitleToColumnPropMap
 
   getColumnPropToColumnInfo(): ColumnPropToColumnInfoMap
+}
 
+export interface DefaultDetailsService {
   getDefaultDetails(): FinancialRowData
 }

@@ -53,7 +53,9 @@ describe('DiscountANameCalculationService', () => {
       percentEmployeeBenefitsPaidByEmployer: 10,
       percentDependantBenefitsPaidByEmployer: 5,
     }
-    const nullRes: number = service.getAnnualAmountPaidByCompany(MockRowWithoutDependants)
+    const nullRes: number = service.getAnnualAmountPaidByCompany(
+      MockRowWithoutDependants,
+    )
     expect(nullRes).toBeNull()
   })
 
@@ -67,7 +69,9 @@ describe('DiscountANameCalculationService', () => {
       percentEmployeeBenefitsPaidByEmployer: 10,
       percentDependantBenefitsPaidByEmployer: 5,
     }
-    const nullRes: number = service.getAnnualEmployeeSalaryAfterDeductions(MockRowWithoutDependants)
+    const nullRes: number = service.getAnnualEmployeeSalaryAfterDeductions(
+      MockRowWithoutDependants,
+    )
     expect(nullRes).toBeNull()
   })
 
@@ -103,8 +107,8 @@ describe('DiscountANameCalculationService', () => {
       annualSalary: 100000,
       annualEmployeeBenefitsCost: 2000,
       annualDependantBenefitsCost: 1000,
-      percentEmployeeBenefitsPaidByEmployer: 10,
-      percentDependantBenefitsPaidByEmployer: 5,
+      percentEmployeeBenefitsPaidByEmployer: 12,
+      percentDependantBenefitsPaidByEmployer: 4,
     }
     const rowNameDoesntStartWithA: FinancialRowData = {
       name: 'Mr. Tester',
@@ -112,35 +116,45 @@ describe('DiscountANameCalculationService', () => {
       annualSalary: 100000,
       annualEmployeeBenefitsCost: 2000,
       annualDependantBenefitsCost: 1000,
-      percentEmployeeBenefitsPaidByEmployer: 10,
-      percentDependantBenefitsPaidByEmployer: 5,
+      percentEmployeeBenefitsPaidByEmployer: 12,
+      percentDependantBenefitsPaidByEmployer: 4,
     }
-    const paidByCompanyDiscounted: number = service.getAnnualAmountPaidByCompany(rowNameStartsWithA)
-    const paidByCompanyNormal: number = service.getAnnualAmountPaidByCompany(rowNameDoesntStartWithA)
+    const paidByCompanyDiscounted: number = service.getAnnualAmountPaidByCompany(
+      rowNameStartsWithA,
+    )
+    const paidByCompanyNormal: number = service.getAnnualAmountPaidByCompany(
+      rowNameDoesntStartWithA,
+    )
 
-    const employeeSalaryDiscounted: number = service.getAnnualEmployeeSalaryAfterDeductions(rowNameStartsWithA)
-    const employeeSalaryNormal: number = service.getAnnualEmployeeSalaryAfterDeductions(rowNameDoesntStartWithA)
+    const employeeSalaryDiscounted: number = service.getAnnualEmployeeSalaryAfterDeductions(
+      rowNameStartsWithA,
+    )
+    const employeeSalaryNormal: number = service.getAnnualEmployeeSalaryAfterDeductions(
+      rowNameDoesntStartWithA,
+    )
 
-    expect(
+    const expectedDiscountedCompanyCost: number =
       paidByCompanyNormal -
-        (0.1 *
-          (rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer *
-            rowNameStartsWithA.annualEmployeeBenefitsCost +
-            rowNameStartsWithA.percentDependantBenefitsPaidByEmployer *
-              rowNameStartsWithA.numDependants *
-              rowNameStartsWithA.annualDependantBenefitsCost)) /
-          100,
-    ).toEqual(paidByCompanyDiscounted)
+      (0.1 *
+        (rowNameDoesntStartWithA.percentEmployeeBenefitsPaidByEmployer *
+          rowNameDoesntStartWithA.annualEmployeeBenefitsCost +
+          rowNameDoesntStartWithA.percentDependantBenefitsPaidByEmployer *
+            rowNameDoesntStartWithA.annualDependantBenefitsCost *
+            rowNameDoesntStartWithA.numDependants)) /
+        100
 
-    expect(
+    const expectedDiscountedSalary: number =
       employeeSalaryNormal +
-        (0.1 *
-          ((100 - rowNameStartsWithA.percentEmployeeBenefitsPaidByEmployer) *
-            rowNameStartsWithA.annualEmployeeBenefitsCost +
-            (100 - rowNameStartsWithA.percentDependantBenefitsPaidByEmployer) *
-              rowNameStartsWithA.numDependants *
-              rowNameStartsWithA.annualDependantBenefitsCost)) /
-          100,
-    ).toEqual(employeeSalaryDiscounted)
+      (0.1 *
+        ((100 - rowNameDoesntStartWithA.percentEmployeeBenefitsPaidByEmployer) *
+          rowNameDoesntStartWithA.annualEmployeeBenefitsCost +
+          (100 -
+            rowNameDoesntStartWithA.percentDependantBenefitsPaidByEmployer) *
+            rowNameDoesntStartWithA.annualDependantBenefitsCost *
+            rowNameDoesntStartWithA.numDependants)) /
+        100
+
+    expect(expectedDiscountedCompanyCost).toEqual(paidByCompanyDiscounted)
+    expect(expectedDiscountedSalary).toEqual(employeeSalaryDiscounted)
   })
 })

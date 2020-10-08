@@ -3,13 +3,21 @@ import { XlsxExcelService } from './xlsx-excel.service'
 import { FinancialRowData } from '../data-typing/financial-row-data'
 import { ExcelGridData } from '../data-typing/excel-data'
 import { SimpleGridService } from './simple-grid.service'
+import { DiscountANameCalculationService } from './discount-a-name-calculation.service'
 
 describe('XlsxExcelService', () => {
   let service: XlsxExcelService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: 'GridService', useClass: SimpleGridService }],
+      providers: [
+        { provide: 'ColumnDetailsService', useClass: SimpleGridService },
+        { provide: 'DefaultDetailsService', useClass: SimpleGridService },
+        {
+          provide: 'CalculationService',
+          useClass: DiscountANameCalculationService,
+        },
+      ],
     })
     service = TestBed.inject(XlsxExcelService)
   })

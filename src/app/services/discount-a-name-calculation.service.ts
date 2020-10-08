@@ -25,18 +25,22 @@ export class DiscountANameCalculationService implements CalculationService {
       /* Return null if any of the required information to calculate the cost is missing */
       return null
     }
-    if (this.startsWithA(name)) {
-      /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-      rowData.annualEmployeeBenefitsCost *= 0.9
-      rowData.annualDependantBenefitsCost *= 0.9
-    }
+
+    /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
+    const annualEmployeeBenefitsCost: number = this.startsWithA(rowData.name) ?
+      0.9 * rowData.annualEmployeeBenefitsCost
+      : rowData.annualEmployeeBenefitsCost;
+    const annualDependantBenefitsCost: number = this.startsWithA(rowData.name) ?
+      0.9 * rowData.annualDependantBenefitsCost
+      : rowData.annualDependantBenefitsCost;
+
     return (
       rowData.annualSalary +
-      (rowData.annualEmployeeBenefitsCost * rowData.percentEmployeeBenefitsPaidByEmployer) /
-        100 +
-      (rowData.numDependants *
-        rowData.annualDependantBenefitsCost *
-        rowData.percentDependantBenefitsPaidByEmployer) /
+      (annualEmployeeBenefitsCost *
+        rowData.percentEmployeeBenefitsPaidByEmployer +
+        rowData.numDependants *
+        annualDependantBenefitsCost *
+          rowData.percentDependantBenefitsPaidByEmployer) /
         100
     )
   }
@@ -48,25 +52,29 @@ export class DiscountANameCalculationService implements CalculationService {
       !rowData.annualDependantBenefitsCost ||
       !rowData.percentEmployeeBenefitsPaidByEmployer ||
       !rowData.percentDependantBenefitsPaidByEmployer ||
-      !rowData.numDependants
+      !rowData.numDependants ||
+      !rowData.name
     ) {
       /* Return null if any of the required information to calculate the cost is missing */
       return null
     }
-    if (this.startsWithA(name)) {
-      /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
-      rowData.annualEmployeeBenefitsCost *= 0.9
-      rowData.annualDependantBenefitsCost *= 0.9
-    }
+
+    /* Benefits receive a 10% discount if the employee's name starts with an 'A' */
+    const annualEmployeeBenefitsCost: number = this.startsWithA(rowData.name) ?
+      0.9 * rowData.annualEmployeeBenefitsCost
+      : rowData.annualEmployeeBenefitsCost;
+    const annualDependantBenefitsCost: number = this.startsWithA(rowData.name) ?
+      0.9 * rowData.annualDependantBenefitsCost
+      : rowData.annualDependantBenefitsCost;
+
     return (
       rowData.annualSalary -
-      (rowData.annualEmployeeBenefitsCost *
-        (100 - rowData.percentEmployeeBenefitsPaidByEmployer)) /
-        100 -
-      rowData.numDependants *
-        ((rowData.annualDependantBenefitsCost *
+      (annualEmployeeBenefitsCost *
+        (100 - rowData.percentEmployeeBenefitsPaidByEmployer) +
+        rowData.numDependants *
+        annualDependantBenefitsCost *
           (100 - rowData.percentDependantBenefitsPaidByEmployer)) /
-          100)
+        100
     )
   }
 

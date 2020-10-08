@@ -12,7 +12,8 @@ describe('DataGridComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DataGridComponent],
       providers: [
-        { provide: 'GridService', useClass: SimpleGridService },
+        { provide: 'ColumnDetailsService', useClass: SimpleGridService },
+        { provide: 'DefaultDetailsService', useClass: SimpleGridService },
         {
           provide: 'CalculationService',
           useClass: DiscountANameCalculationService,

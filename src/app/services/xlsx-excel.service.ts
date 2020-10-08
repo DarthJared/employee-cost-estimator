@@ -4,23 +4,28 @@ import { ColInfo } from 'xlsx'
 import { FinancialRowData } from '../data-typing/financial-row-data'
 import { ExcelGridData, ExcelRowData } from '../data-typing/excel-data'
 import { ExcelService } from './excel.service'
-import { GridService } from './grid.service'
+import { ColumnDetailsService, DefaultDetailsService } from './grid.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class XlsxExcelService implements ExcelService {
-  constructor(@Inject('GridService') private gridService: GridService) {}
+  constructor(
+    @Inject('ColumnDetailsService')
+    private columnDetailsService: ColumnDetailsService,
+    @Inject('DefaultDetailsService')
+    private defaultDetailsService: DefaultDetailsService,
+  ) {}
 
   applyImportedData(data: ExcelGridData): FinancialRowData[] {
     const importedData: FinancialRowData[] = []
     for (let i = 0; i < data[0].length; i++) {
       for (let j = 1; j < data.length; j++) {
         if (i === 0) {
-          importedData.push(this.gridService.getDefaultDetails())
+          importedData.push(this.defaultDetailsService.getDefaultDetails())
         }
         importedData[j - 1][
-          this.gridService.getColumnTitlesToProps()[data[0][i]]
+          this.columnDetailsService.getColumnTitlesToProps()[data[0][i]]
         ] = data[j][i]
       }
     }
@@ -62,7 +67,7 @@ export class XlsxExcelService implements ExcelService {
     if (template) {
       /* If they are downloading the Import Template, only give them the column headers */
       for (const columnName of Object.keys(
-        this.gridService.getColumnTitlesToProps(),
+        this.columnDetailsService.getColumnTitlesToProps(),
       )) {
         headerRow.push(columnName)
       }
@@ -71,7 +76,7 @@ export class XlsxExcelService implements ExcelService {
     for (const columnName of Object.keys(currentGridData[0])) {
       props.push(columnName)
       headerRow.push(
-        this.gridService.getColumnPropToColumnInfo()[columnName].title,
+        this.columnDetailsService.getColumnPropToColumnInfo()[columnName].title,
       )
     }
     const dataRows: ExcelGridData = [headerRow]
@@ -93,10 +98,11 @@ export class XlsxExcelService implements ExcelService {
     )
     const wscols: ColInfo[] = []
     for (const columnKey of Object.keys(
-      this.gridService.getColumnPropToColumnInfo(),
+      this.columnDetailsService.getColumnPropToColumnInfo(),
     )) {
       wscols.push({
-        wch: this.gridService.getColumnPropToColumnInfo()[columnKey].width,
+        wch: this.columnDetailsService.getColumnPropToColumnInfo()[columnKey]
+          .width,
       })
     }
 
